@@ -56,4 +56,5 @@ Currently supported methods:
 - [ ] Kneedle
 
 Note: all of the methods are my ideas I came up with over quite some time
+
 Note: this project was bootstrapped by [python-blueprint](https://github.com/johnthagen/python-blueprint)
