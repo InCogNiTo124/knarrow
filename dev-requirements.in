@@ -1,0 +1,30 @@
+# Constrain dev-requirements by requirements to avoid clashing requirements.
+-c requirements.txt
+
+tox
+
+# Testing.
+pytest
+pytest-cov
+
+# Type checking.
+mypy
+
+# Linting.
+flake8
+pep8-naming
+
+# Formatting.
+black
+isort
+
+# Documentation.
+
+## API.
+Sphinx
+sphinx-autobuild
+furo
+
+## User Guide.
+mkdocs-material
+mkdocs-htmlproofer-plugin
