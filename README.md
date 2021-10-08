@@ -9,8 +9,9 @@ Detect knee points in various scenarios using a plethora of methods
 
 ## Usage
 Just plugin your values in a `list`, `tuple` or an `np.ndarray` and watch `knarrow` hit the knee:
+
 ```pycon
->>> from knarrow import find_knee
+>>> from stubs import find_knee
 >>> find_knee([1, 2, 3, 4, 6])  # use a list
 3
 >>> find_knee((1, 2, 3, 4, 6))  # or a tuple
