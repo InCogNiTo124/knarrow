@@ -7,9 +7,9 @@ import setuptools
 project_dir = Path(__file__).parent
 
 setuptools.setup(
-    name="knarrow",
+    name="stubs",
     version="0.0.2",
-    description="Shoot a knarrow to the knee",
+    description="Shoot a stubs to the knee",
     # Use UTF-8 encoding for README even on Windows by using the encoding argument.
     long_description=project_dir.joinpath("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
@@ -28,7 +28,7 @@ setuptools.setup(
     include_package_data=True,
     # This file is required to inform mypy that inline type hints are used.
     #   See: https://mypy.readthedocs.io/en/stable/installed_packages.html
-    package_data={"knarrow": ["py.typed"]},
+    package_data={"stubs": ["py.typed"]},
     # This is a trick to avoid duplicating dependencies between both setup.py and
     # requirements.txt.
     # requirements.txt must be included in MANIFEST.in for this to work.

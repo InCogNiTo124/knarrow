@@ -1,0 +1,48 @@
+# Set strict to true to turn warnings into errors to catch warnings within CI.
+strict: true
+theme:
+  name: material
+  # By default fonts are pulled from Google on the Internet. To support offline usage, this is
+  # disabled.
+  font: false
+  palette:
+    scheme: slate
+    primary: green
+    accent: yellow
+  icon:
+    logo: material/math-integral-box
+    # GitHub specific.
+    repo: fontawesome/brands/github
+  favicon: static/math-integral-box.png
+  features:
+    - search.highlight
+    - search.share
+    - search.suggest
+markdown_extensions:
+  - admonition
+  - pymdownx.keys
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/johnthagen/python-blueprint
+# This is needed to allow links to work when opened from the file system.
+use_directory_urls: false
+plugins:
+  - search
+  # This plugin is used to validate URLs (including some anchors).
+  # Uncomment to build the docs with this validation enabled.
+  # This is commented out by default because this requires network I/O to validate URLs, so it is
+  # inherently not exactly reproducible. But this plugin is none-the-less helpful at detecting
+  # incorrect URLs.
+#  - htmlproofer:
+#      raise_error: True
+site_name: fact
+copyright: Copyright &copy; 2018-2021 John Hagen
+# GitHub Specific Configuration.
+repo_name: python-blueprint
+repo_url: https://github.com/johnthagen/python-blueprint
+edit_uri: edit/master/docs/user_guide/docs/

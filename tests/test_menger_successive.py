@@ -1,3 +1,5 @@
+from typing import Any
+
 from knarrow.main import double_triangle_area, get_squared_vector_lengths, menger_successive
 import numpy as np
 import numpy.typing as npt
@@ -43,7 +45,7 @@ def test_double_triangle_area(vertices: npt.NDArray[np.float_], output: npt.NDAr
         (np.array([1, 2, 3, 4, 6]).reshape(1, -1), 3),
     ],
 )
-def test_menger_onevar(x, target) -> None:
+def test_menger_onevar(x: Any, target: Any) -> None:
     result = menger_successive(x)
     assert isinstance(result, int)
     assert result == target
@@ -61,5 +63,5 @@ def test_menger_onevar(x, target) -> None:
         ([0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.45, 0.60, 1.0, 2.0]),
     ],
 )
-def test_menger(inputs) -> None:
+def test_menger(inputs: Any) -> None:
     menger_successive(*inputs)

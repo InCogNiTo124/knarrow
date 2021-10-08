@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 plugins = "numpy.typing.mypy_plugin"
 ignore_missing_imports = true
 allow_untyped_calls = true
-strict = true
+strict = false
 exclude = "venv"
 # If certain strict config options are too pedantic for a project,
 # disable them selectively here by setting to false.

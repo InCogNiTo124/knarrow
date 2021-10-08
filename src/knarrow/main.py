@@ -1,5 +1,6 @@
-from typing import Any, Dict
+from typing import Callable
 
+from mypy_extensions import KwArg
 import numpy as np
 from numpy import linalg as la
 import numpy.typing as npt
@@ -7,7 +8,7 @@ import numpy.typing as npt
 from .util import np_anchored, np_windowed, prepare
 
 
-def double_triangle_area(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
+def double_triangle_area(vertices):
     """
     Return twice the area of a triangle with the given vertices.
     Args:
@@ -20,7 +21,7 @@ def double_triangle_area(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.flo
     return double_area
 
 
-def get_squared_vector_lengths(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
+def get_squared_vector_lengths(vertices):
     """
     Return the square of the lengths between neighbouring vertices
     Args:
@@ -37,7 +38,7 @@ def get_squared_vector_lengths(vertices: npt.NDArray[np.float_]) -> npt.NDArray[
     return lengths
 
 
-def get_curvature(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
+def get_curvature(vertices):
     area = double_triangle_area(vertices)
     value = 4 * area * area / np.prod(get_squared_vector_lengths(vertices))
     curvature: npt.NDArray[np.float_] = np.sqrt(value)
@@ -45,7 +46,7 @@ def get_curvature(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
 
 
 @prepare
-def menger_successive(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwargs: Dict[Any, Any]) -> int:
+def menger_successive(x, y, **kwargs):
     assert len(kwargs) == 0
     assert x.shape == y.shape
     indices = np_windowed(len(x), 3)
@@ -55,7 +56,7 @@ def menger_successive(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kw
 
 
 @prepare
-def menger_anchored(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwargs: Dict[Any, Any]) -> int:
+def menger_anchored(x, y, **kwargs):
     assert len(kwargs) == 0
     assert x.shape == y.shape
     # perhaps later `menger_anchored` and `menger_successive` can be united in the future
@@ -67,9 +68,7 @@ def menger_anchored(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwar
 
 
 @prepare
-def find_knee(
-    x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], method="menger_successive", **kwargs: Dict[Any, Any]
-) -> int:
-    assert method in ["menger_successive"]
-    function = locals()[method]
+def find_knee(x, y, method="menger_successive", **kwargs):
+    assert method in ["menger_successive", "menger_anchored"]
+    function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = locals()[method]
     return function(x, y, **kwargs)
