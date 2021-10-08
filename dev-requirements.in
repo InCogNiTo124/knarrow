@@ -28,3 +28,6 @@ furo
 ## User Guide.
 mkdocs-material
 mkdocs-htmlproofer-plugin
+
+## Deploy new version to pypi @ git tag
+tbump
