@@ -4,7 +4,7 @@ import numpy as np
 from numpy import linalg as la
 import numpy.typing as npt
 
-from .util import np_windowed, prepare
+from .util import np_anchored, np_windowed, prepare
 
 
 def double_triangle_area(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
@@ -45,7 +45,7 @@ def get_curvature(vertices: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
 
 
 @prepare
-def menger(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwargs: Dict[Any, Any]) -> int:
+def menger_successive(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwargs: Dict[Any, Any]) -> int:
     assert len(kwargs) == 0
     assert x.shape == y.shape
     indices = np_windowed(len(x), 3)
@@ -55,6 +55,21 @@ def menger(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwargs: Dict[
 
 
 @prepare
-def find_knee(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], method="menger", **kwargs: Dict[Any, Any]) -> int:
-    assert method == "menger"
-    return menger(x, y, **kwargs)
+def menger_anchored(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], **kwargs: Dict[Any, Any]) -> int:
+    assert len(kwargs) == 0
+    assert x.shape == y.shape
+    # perhaps later `menger_anchored` and `menger_successive` can be united in the future
+    # since the only difference is this line
+    indices = np_anchored(len(x))
+    data_points = np.stack((x[indices], y[indices]), axis=-1)
+    curve_scores = np.array([get_curvature(row) for row in data_points])
+    return curve_scores.argmax().item() + 1
+
+
+@prepare
+def find_knee(
+    x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], method="menger_successive", **kwargs: Dict[Any, Any]
+) -> int:
+    assert method in ["menger_successive"]
+    function = locals()[method]
+    return function(x, y, **kwargs)

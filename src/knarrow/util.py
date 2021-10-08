@@ -7,7 +7,14 @@ def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 
         -1, 1
     )
     windows: npt.NDArray[np.int_] = dilation * np.arange(window_size).reshape(1, -1)
-    return windows + base_indices
+    return windows + base_indices  # broadcasting trick
+
+
+def np_anchored(length: int) -> npt.NDArray[np.int_]:
+    indices = list(range(1, length - 1))
+    first = [0] * len(indices)
+    last = [length - 1] * len(indices)
+    return np.stack((first, indices, last), axis=-1)
 
 
 def prepare(f):  # type: ignore
