@@ -116,7 +116,8 @@ modules.xml
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -424,3 +425,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/python,intellij+all,pycharm+all,vim,pythonvanilla,virtualenv,venv,macos,windows,linux
+/docs/api/_build/
+/docs/user_guide/site/
