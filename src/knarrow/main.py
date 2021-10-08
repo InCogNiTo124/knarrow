@@ -45,6 +45,7 @@ def get_curvature(vertices):
     return curvature
 
 
+@prepare
 def menger_successive(x, y, **kwargs):
     assert len(kwargs) == 0
     assert x.shape == y.shape
@@ -54,6 +55,7 @@ def menger_successive(x, y, **kwargs):
     return curve_scores.argmax().item() + 1
 
 
+@prepare
 def menger_anchored(x, y, **kwargs):
     assert len(kwargs) == 0
     assert x.shape == y.shape
