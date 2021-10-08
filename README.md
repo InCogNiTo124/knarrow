@@ -16,9 +16,11 @@ Just plugin your values in a `list`, `tuple` or an `np.ndarray` and watch `knarr
 >>> find_knee((1, 2, 3, 4, 6))  # or a tuple
 3
 >>> import numpy as np
->>> x = np.arange(8)
 >>> y = np.array([1.0, 1.05, 1.15, 1.28, 1.30, 2.5, 3.6, 4.9])
->>> find_knee(x, y)  # or even provide x and y directly
+>>> find_knee(y)  # provide just the values
+4
+>>> x = np.arange(8)
+>>> find_knee(x, y)  # or both x and y
 4
 >>> A = np.vstack((x, y))
 >>> A
@@ -41,9 +43,9 @@ array([[0.  , 1.  ],
 
 ## Methods:
 Currently supported methods:
-- [ ] Curvature methods:
-  - [x] Circle through 3 succesive points (`menger`)
-  - [ ] Fix the start and the end point, change the middle one
+- [x] Curvature methods:
+  - [x] Circle through 3 succesive points (`menger_successive`)
+  - [x] Fix the start and the end point, change the middle one (`menger_anchored`)
 - [ ] Maximum change in the angle of connecting lines
 - [ ] Two lines method:
   - [ ] Split the dataset in two parts, fit OLS to them and sum up the resulting R2
