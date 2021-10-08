@@ -1,5 +1,10 @@
+from typing import Any, Callable, Dict, List, Tuple, Union
+
+from mypy_extensions import KwArg, VarArg
 import numpy as np
 import numpy.typing as npt
+
+Number = Union[int, float]
 
 
 def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 1) -> npt.NDArray[np.int_]:
@@ -17,8 +22,10 @@ def np_anchored(length: int) -> npt.NDArray[np.int_]:
     return np.stack((first, indices, last), axis=-1)
 
 
-def prepare(f):  # type: ignore
-    def inner(*args, **kwargs):  # type:ignore
+def prepare(
+    f: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], str, KwArg(Dict[Any, Any])], int]
+) -> Callable[[VarArg(), KwArg()], int]:
+    def inner(*args: VarArg(), **kwargs: KwArg()) -> int:
         assert 1 <= len(args) <= 2
         if len(args) == 2:
             x = np.array(args[0])
