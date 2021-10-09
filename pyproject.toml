@@ -33,7 +33,7 @@ skip_gitignore = true
 branch = true
 [tool.tbump]
 # Uncomment this if your project is hosted on GitHub:
-# github_url = "https://github.com/<user or organization>/<project>/"
+github_url = "https://github.com/InCogNiTo124/knarrow"
 
 [tool.tbump.version]
 current = "0.0.2"
@@ -57,7 +57,11 @@ tag_template = "v{new_version}"
 # section containing the path of the file, relative to the
 # tbump.toml location.
 [[tool.tbump.file]]
-src = "..."
+src = "setup.py"
+
+[[tool.tbump.file]]
+src = "pyproject.toml"
+
 
 # You can specify a list of commands to
 # run after the files have been patched
