@@ -1,17 +1,18 @@
-name: python
+name: Test and release job
 
 on: [push, pull_request]
 
 jobs:
   tox:
+    name: Run tox (pytest, mypy, docs build)
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@master
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -20,3 +21,33 @@ jobs:
         pip install tox tox-gh-actions
     - name: Test with tox
       run: tox
+
+  build-and-publish:
+    name: Build and publish knarrow
+    runs-on: ubuntu-latest
+    needs: tox
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup Python 3.9
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
+      - name: Install pypa/build
+        run: >-
+          python3 -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and source tarball
+        run: >-
+          python3 -m
+          build
+          --sdist
+          --wheel
+          --outdir dist/
+      - name: Publish distribution to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          verbose: true
