@@ -50,3 +50,7 @@ def prepare(
         return f(x, y, **kwargs)
 
     return inner
+
+
+def scale(x):
+    return (x - x.min()) / (x.max() - x.min())

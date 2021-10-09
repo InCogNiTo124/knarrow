@@ -1,4 +1,4 @@
-from knarrow.util import np_windowed
+from knarrow.util import np_windowed, scale
 import numpy as np
 import numpy.typing as npt
 import pytest
@@ -19,3 +19,15 @@ def test_np_widowed(length: int, w: int, s: int, d: int, target: npt.NDArray[np.
     output = np_windowed(length, w, s, d)
     assert output.shape == target.shape, output
     assert (output == target).all()
+
+
+def test_scale():
+    rng = np.random.default_rng()
+    for _ in range(100):
+        mean = rng.uniform(-10, 10)
+        std = rng.uniform(1, 100)
+        length = rng.integers(3, 100_000, 1)
+        array = rng.normal(mean, std, length)
+        scaled_array = scale(array)
+        assert scaled_array.min().item() == 0
+        assert scaled_array.max().item() == 1

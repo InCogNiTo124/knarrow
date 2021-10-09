@@ -1,9 +1,11 @@
-from knarrow.main import angle, menger_anchored, menger_successive
+from knarrow.main import angle, distance_vert, menger_anchored, menger_successive
 import numpy as np
 import pytest
 
+ALL_FUNCTIONS = [angle, menger_anchored, menger_successive, distance_vert]
 
-@pytest.mark.parametrize("function", [angle, menger_anchored, menger_successive])
+
+@pytest.mark.parametrize("function", ALL_FUNCTIONS)
 @pytest.mark.parametrize(
     "x,target",
     [
@@ -22,7 +24,7 @@ def test_onevar(function, x, target):
 
 
 @pytest.mark.xfail(raises=AssertionError)
-@pytest.mark.parametrize("function", [angle, menger_anchored, menger_successive])
+@pytest.mark.parametrize("function", ALL_FUNCTIONS)
 @pytest.mark.parametrize(
     "inputs",
     [

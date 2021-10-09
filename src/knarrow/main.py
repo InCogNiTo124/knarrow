@@ -5,7 +5,7 @@ import numpy as np
 from numpy import linalg as la
 import numpy.typing as npt
 
-from .util import np_anchored, np_windowed, prepare
+from .util import np_anchored, np_windowed, prepare, scale
 
 
 def double_triangle_area(vertices):
@@ -80,7 +80,17 @@ def angle(x, y, **kwargs):
 
 
 @prepare
+def distance_vert(x, y, **kwargs):
+    assert len(kwargs) == 0
+    assert x.shape == y.shape
+    x_scaled = scale(x)
+    y_scaled = scale(y)
+    distance = abs(y_scaled - x_scaled)
+    return np.argmax(distance).item()
+
+
+@prepare
 def find_knee(x, y, method="menger_successive", **kwargs):
-    assert method in ["menger_successive", "menger_anchored", "angle"]
+    assert method in ["menger_successive", "menger_anchored", "angle", "distance_vert"]
     function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = locals()[method]
     return function(x, y, **kwargs)
