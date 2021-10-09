@@ -81,6 +81,6 @@ def angle(x, y, **kwargs):
 
 @prepare
 def find_knee(x, y, method="menger_successive", **kwargs):
-    assert method in ["menger_successive", "menger_anchored"]
+    assert method in ["menger_successive", "menger_anchored", "angle"]
     function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = locals()[method]
     return function(x, y, **kwargs)
