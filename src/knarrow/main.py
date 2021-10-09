@@ -5,7 +5,7 @@ import numpy as np
 from numpy import linalg as la
 import numpy.typing as npt
 
-from .util import np_anchored, np_windowed, prepare, scale
+from .util import normalize, np_anchored, np_windowed, prepare
 
 
 def double_triangle_area(vertices):
@@ -39,6 +39,14 @@ def get_squared_vector_lengths(vertices):
 
 
 def get_curvature(vertices):
+    """
+    Calculate the Menger curvature defined by the three points
+    Args:
+        vertices: npt.NDArray, 3x2 matrix where every row is a new 2-D vertex (x, y)
+
+    Returns:
+        curvature: npt.NDArray, the reciprocal of the radius of the circumcircle around the vertices
+    """
     area = double_triangle_area(vertices)
     value = 4 * area * area / np.prod(get_squared_vector_lengths(vertices))
     curvature: npt.NDArray[np.float_] = np.sqrt(value)
@@ -47,6 +55,15 @@ def get_curvature(vertices):
 
 @prepare
 def menger_successive(x, y, **kwargs):
+    """
+    Find a knee using the Menger curvature on the three successive points
+    Args:
+        x: npt.NDArray, the x coordinates of the points
+        y: npt.NDArray, the y coordinates of the points
+        **kwargs: possible additional arguments (none are used)
+
+    Returns: int, the index of the knee
+    """
     assert len(kwargs) == 0
     assert x.shape == y.shape
     indices = np_windowed(len(x), 3)
@@ -57,6 +74,17 @@ def menger_successive(x, y, **kwargs):
 
 @prepare
 def menger_anchored(x, y, **kwargs):
+    """
+        Find a knee using the Menger curvature on the first point, last point, and varying the middle point.
+        More resistant to the noise in the data than menger_successive
+
+        Args:
+            x: npt.NDArray, the x coordinates of the points
+            y: npt.NDArray, the y coordinates of the points
+            **kwargs: possible additional arguments (none are used)
+    e
+        Returns: int, the index of the knee
+    """
     assert len(kwargs) == 0
     assert x.shape == y.shape
     # perhaps later `menger_anchored` and `menger_successive` can be united in the future
@@ -69,6 +97,16 @@ def menger_anchored(x, y, **kwargs):
 
 @prepare
 def angle(x, y, **kwargs):
+    """
+    Find a knee by looking at the maximum change of the angle between neighbouring points
+
+    Args:
+        x: npt.NDArray, the x coordinates of the points
+        y: npt.NDArray, the y coordinates of the points
+        **kwargs: possible additional arguments (none are used)
+
+    Returns: int, the index of the knee
+    """
     assert len(kwargs) == 0
     assert x.shape == y.shape
     d_x = np.diff(x)
@@ -80,17 +118,40 @@ def angle(x, y, **kwargs):
 
 
 @prepare
-def distance_vert(x, y, **kwargs):
+def distance(x, y, **kwargs):
+    """
+    Find a knee by finding a point which is most distant from the line y=x (after normalizing the inputs)
+    Fun fact: *vertical* distance of a point P from line y=x is just a scaled version of the *orthogonal* distance of
+    the same point P from line x=y.
+
+    Args:
+        x: npt.NDArray, the x coordinates of the points
+        y: npt.NDArray, the y coordinates of the points
+        **kwargs: possible additional arguments (non are used)
+
+    Returns: int, the index of the knee
+    """
     assert len(kwargs) == 0
     assert x.shape == y.shape
-    x_scaled = scale(x)
-    y_scaled = scale(y)
-    distance = abs(y_scaled - x_scaled)
-    return np.argmax(distance).item()
+    x_scaled = normalize(x)
+    y_scaled = normalize(y)
+    distances = abs(y_scaled - x_scaled)
+    return np.argmax(distances).item()
 
 
 @prepare
 def find_knee(x, y, method="menger_successive", **kwargs):
+    """
+    Public method for finding the knee
+
+    Args:
+        x: npt.NDArray, the x coordinates of the points
+        y: npt.NDArray, the y coordinates of the points
+        method: str, denotes the method to be used (default: menger_successive)
+        **kwargs: possible additional arguments for the knee-finding method
+
+    Returns: int, the index of the knee
+    """
     assert method in ["menger_successive", "menger_anchored", "angle", "distance_vert"]
     function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = locals()[method]
     return function(x, y, **kwargs)

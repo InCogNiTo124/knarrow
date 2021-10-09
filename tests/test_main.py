@@ -1,8 +1,8 @@
-from knarrow.main import angle, distance_vert, menger_anchored, menger_successive
+from knarrow.main import angle, distance, menger_anchored, menger_successive
 import numpy as np
 import pytest
 
-ALL_FUNCTIONS = [angle, menger_anchored, menger_successive, distance_vert]
+ALL_FUNCTIONS = [angle, menger_anchored, menger_successive, distance]
 
 
 @pytest.mark.parametrize("function", ALL_FUNCTIONS)

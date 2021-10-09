@@ -8,6 +8,19 @@ Number = Union[int, float]
 
 
 def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 1) -> npt.NDArray[np.int_]:
+    """
+    Return indices x such that every row in array[x] is a windowed slice of the array
+    Helper function which uses numpy broadcasting to work
+    Adapted from: https://stackoverflow.com/a/42258242
+
+    Args:
+        length: int, the total length of the array to be indexed
+        window_size: int, the size of the window to be slided across the array
+        stride: int, the size of the "jumps" between the consecutive windows (default: 1)
+        dilation: int, the distance between the elements in the window (default: 1)
+
+    Returns: npt.NDArray, indices for windowing an array
+    """
     base_indices: npt.NDArray[np.int_] = stride * np.arange((length - window_size) // (stride * dilation) + 1).reshape(
         -1, 1
     )
@@ -16,10 +29,20 @@ def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 
 
 
 def np_anchored(length: int) -> npt.NDArray[np.int_]:
+    """
+    Return indices x such that every row in array[x] is a slice of the array with a first, i-th and the last element
+    Helper function which uses numpy broadcasting to work
+
+    Args:
+        length: int, the total length of the array to be indexed in the anchored way
+    Returns: npt.NDArray, indices for windowing an array
+
+    """
     indices = list(range(1, length - 1))
     first = [0] * len(indices)
     last = [length - 1] * len(indices)
-    return np.stack((first, indices, last), axis=-1)
+    indices = np.stack((first, indices, last), axis=-1)
+    return indices
 
 
 def prepare(
@@ -52,5 +75,15 @@ def prepare(
     return inner
 
 
-def scale(x):
+def normalize(x):
+    """
+    Helper function for normalizing the inputs.
+    Normalization is an affine transformation such that the minimal element of x maps to 0, and maximal element of x
+    maps to 1
+    Args:
+        x: npt.NDArray, the array to be normalized
+
+    Returns: npt.NDArray, a normalized array such that the minimum is 0 and the maximum is 1
+
+    """
     return (x - x.min()) / (x.max() - x.min())

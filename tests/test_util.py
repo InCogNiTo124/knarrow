@@ -1,4 +1,4 @@
-from knarrow.util import np_windowed, scale
+from knarrow.util import normalize, np_windowed
 import numpy as np
 import numpy.typing as npt
 import pytest
@@ -28,6 +28,6 @@ def test_scale():
         std = rng.uniform(1, 100)
         length = rng.integers(3, 100_000, 1)
         array = rng.normal(mean, std, length)
-        scaled_array = scale(array)
+        scaled_array = normalize(array)
         assert scaled_array.min().item() == 0
         assert scaled_array.max().item() == 1
