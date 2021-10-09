@@ -68,6 +68,18 @@ def menger_anchored(x, y, **kwargs):
 
 
 @prepare
+def angle(x, y, **kwargs):
+    assert len(kwargs) == 0
+    assert x.shape == y.shape
+    d_x = np.diff(x)
+    d_y = np.diff(y)
+    angles = np.abs(np.arctan2(d_y, d_x))
+    angle_differences = np.diff(angles)
+    max_diff = angle_differences.argmax().item()
+    return max_diff + 1
+
+
+@prepare
 def find_knee(x, y, method="menger_successive", **kwargs):
     assert method in ["menger_successive", "menger_anchored"]
     function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = locals()[method]
