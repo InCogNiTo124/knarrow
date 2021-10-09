@@ -42,22 +42,4 @@ array([[0.  , 1.  ],
 4
 ```
 
-## Methods:
-Currently supported methods:
-- [x] Curvature methods:
-  - [x] Circle through 3 succesive points (`menger_successive`)
-  - [x] Fix the start and the end point, change the middle one (`menger_anchored`)
-- [ ] Maximum change in the angle of connecting lines
-- [ ] Two lines method:
-  - [ ] Split the dataset in two parts, fit OLS to them and sum up the resulting R2
-  - [ ] Split the dataset in two parts, fit line from start to end and measure R2
-- [ ] Orthogonal distance to y=x
-- [ ] Vertical distance to y=x
-- [ ] Derivative methods
-  - [ ] First derivative
-  - [ ] Second derivative
-- [ ] Kneedle
-
-Note: all of the methods are my ideas I came up with over quite some time
-
 Note: this project was bootstrapped by [python-blueprint](https://github.com/johnthagen/python-blueprint)
