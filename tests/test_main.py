@@ -1,8 +1,9 @@
-from knarrow.main import menger_anchored
+from knarrow.main import angle, menger_anchored, menger_successive
 import numpy as np
 import pytest
 
 
+@pytest.mark.parametrize("function", [angle, menger_anchored, menger_successive])
 @pytest.mark.parametrize(
     "x,target",
     [
@@ -14,13 +15,14 @@ import pytest
         (np.array([1, 2, 3, 4, 6]).reshape(1, -1), 3),
     ],
 )
-def test_menger_onevar(x, target) -> None:
-    result = menger_anchored(x)
+def test_onevar(function, x, target):
+    result = function(x)
     assert isinstance(result, int)
     assert result == target
 
 
 @pytest.mark.xfail(raises=AssertionError)
+@pytest.mark.parametrize("function", [angle, menger_anchored, menger_successive])
 @pytest.mark.parametrize(
     "inputs",
     [
@@ -32,5 +34,5 @@ def test_menger_onevar(x, target) -> None:
         ([0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.45, 0.60, 1.0, 2.0]),
     ],
 )
-def test_menger(inputs) -> None:
-    menger_anchored(*inputs)
+def test_fails(function, inputs):
+    function(*inputs)
