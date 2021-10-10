@@ -1,12 +1,17 @@
 name: Test and release job
 
-on:
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
+# this interferes with my build-and-publish job
+#
+#on:
+#  push:
+#    branches:
+#    - master
+#  pull_request:
+#    branches:
+#    - master
+#
+# therefore I use this (not as good as it spawns extra jobs which cost precious minutes
+on: [push, pull_request]
 
 jobs:
   tox:
