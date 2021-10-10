@@ -70,6 +70,18 @@ def prepare(
                 x, y = argument[0], argument[1]
         else:
             raise ValueError("There can only be 1 or 2 positional arguments passed to the function")
+
+        # more or less all the algorithms depend on the inputs to be sorted, at least in the x dimension
+        # therefore the x and y are sorted together
+        if not np.all(np.diff(x) > 0):
+            sorted_indices = np.argsort(x)  # sort in the ascending way
+            x = x[sorted_indices]
+            y = y[sorted_indices]
+        assert np.all(np.diff(x))
+        # all the methods should work no matter the scale of the data
+        # therefore the input 2D space is transformed in [0, 1]x[0, 1] square
+        x = normalize(x)
+        y = normalize(y)
         return f(x, y, **kwargs)
 
     return inner
