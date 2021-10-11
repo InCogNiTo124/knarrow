@@ -36,7 +36,7 @@ branch = true
 github_url = "https://github.com/InCogNiTo124/knarrow"
 
 [tool.tbump.version]
-current = "0.0.10"
+current = "0.0.11"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before
