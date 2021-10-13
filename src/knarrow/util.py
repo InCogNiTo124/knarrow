@@ -2,6 +2,7 @@ from typing import Any, Callable, Dict, Union
 
 from mypy_extensions import KwArg, VarArg
 import numpy as np
+from numpy import linalg as la
 import numpy.typing as npt
 
 Number = Union[int, float]
@@ -99,3 +100,23 @@ def normalize(x):
 
     """
     return (x - x.min()) / (x.max() - x.min())
+
+
+def projection_distance(vertices):
+    """
+    Return the projection distance of the point P1 to the line through both P2 and the origin.
+    Args:
+        vertices: np.ndarray of dimensions (..., 2, 2), coordinates of the points such that vertices[0] are the
+        coordinates of the point we wish to project on a line defined with the origin and vertices[1]
+
+    Returns: distances, np.ndarray, one dimensional array denoting the distance the point vertices[0] must travel to be
+    projected onto the line defined by vertices[1] and the origin
+    """
+    # vertices is of shape (..., 2, 2)
+    assert vertices.ndim >= 2
+    assert vertices.shape[-2:] == (2, 2)
+    determinants = np.abs(la.det(vertices))  # this is of shape (...), the last two are not existent anymore
+    vectors = vertices[..., 1, :]  # select the second row of all the matrices. this is of shape (..., 2)
+    lengths = la.norm(vectors, ord=2, axis=-1)  # this is of shape (...)
+    distances = determinants / lengths
+    return distances
