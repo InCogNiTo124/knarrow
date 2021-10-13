@@ -120,3 +120,21 @@ def get_delta_matrix(h):
     np.fill_diagonal(dest[:, 1:], -1 / h[1:])  # heh indexing trick
     dest -= np.roll(dest, 1, axis=1)
     return dest
+
+
+def get_weight_matrix(h):
+    """
+
+    Args:
+        h:
+
+    Returns:
+
+    """
+    assert h.ndim == 1
+    n = len(h)
+    out = np.zeros((n - 1, n - 1))
+    np.fill_diagonal(out, (h[:-1] + h[1:]) / 3.0)  # main diagonal
+    np.fill_diagonal(out[:, 1:], h[1:] / 6.0)  # upper diagonal
+    np.fill_diagonal(out[1:, :], h[1:] / 6.0)  # lower diagonal
+    return out

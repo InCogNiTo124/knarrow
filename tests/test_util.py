@@ -1,4 +1,4 @@
-from knarrow.util import get_delta_matrix, normalize, np_windowed
+from knarrow.util import get_delta_matrix, get_weight_matrix, normalize, np_windowed
 import numpy as np
 import numpy.typing as npt
 import pytest
@@ -54,7 +54,32 @@ def test_scale():
 def test_get_delta_matrix(x, target):
     n = len(x)
     out = get_delta_matrix(x)
+    assert out.shape == (n - 1, n + 1)
+    assert np.allclose(out, target)
+
+
+@pytest.mark.parametrize(
+    "x,target",
+    [
+        # Yup I calculated this by hand as well
+        # perhaps add more such tests
+        (
+            np.arange(1, 6) / 5,
+            np.array(
+                [
+                    [0.2, 1 / 15, 0.0, 0.0],
+                    [1 / 15, 1 / 3, 0.1, 0.0],
+                    [0.0, 0.1, 7 / 15, 2 / 15],
+                    [0.0, 0.0, 2 / 15, 0.6],
+                ]
+            ),
+        ),
+    ],
+)
+def test_get_weight_matrix(x, target):
+    n = len(x)
+    out = get_weight_matrix(x)
     print(out)
     print(target)
-    assert out.shape == (n - 1, n + 1)
+    assert out.shape == (n - 1, n - 1)
     assert np.allclose(out, target)
