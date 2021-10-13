@@ -78,11 +78,17 @@ def prepare(
             sorted_indices = np.argsort(x)  # sort in the ascending way
             x = x[sorted_indices]
             y = y[sorted_indices]
-        assert np.all(np.diff(x))
+            assert np.all(np.diff(x))
         # all the methods should work no matter the scale of the data
         # therefore the input 2D space is transformed in [0, 1]x[0, 1] square
         x = normalize(x)
         y = normalize(y)
+
+        # optionally smooth out the data using cubic splines (custom implementation, no external libs)
+        smoothing = kwargs.get("smoothing", 0.0)
+        assert smoothing >= 0.0
+        if smoothing > 0:
+            x, y = cubic_spline_smoothing(x, y, smoothing)
         return f(x, y, **kwargs)
 
     return inner
@@ -148,4 +154,4 @@ def cubic_spline_smoothing(x, y, smoothing_factor=0):
     # equivalent to 'delta.T @ np.inv(weight) @ delta', just both numerically more stable and faster
     matrix = delta.T @ la.solve(weight, delta)
     smoothed_y = la.solve(np.identity(len(y)) + smoothing_factor * matrix, y)
-    return smoothed_y
+    return x, smoothed_y
