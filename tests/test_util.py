@@ -1,5 +1,6 @@
 from knarrow.util import get_delta_matrix, get_weight_matrix, normalize, np_windowed
 import numpy as np
+import numpy.linalg as la
 import numpy.typing as npt
 import pytest
 
@@ -83,3 +84,12 @@ def test_get_weight_matrix(x, target):
     print(target)
     assert out.shape == (n - 1, n - 1)
     assert np.allclose(out, target)
+
+
+@pytest.mark.parametrize("n", range(3, 20))
+def test_numerical(n):
+    delta = np.random.randn(n - 2, n)
+    weight = np.random.randn(n - 2, n - 2)
+    out1 = delta.T @ la.inv(weight) @ delta
+    out2 = delta.T @ la.solve(weight, delta)
+    assert np.allclose(out1, out2)

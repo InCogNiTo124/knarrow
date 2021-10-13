@@ -2,6 +2,7 @@ from typing import Any, Callable, Dict, Union
 
 from mypy_extensions import KwArg, VarArg
 import numpy as np
+import numpy.linalg as la
 import numpy.typing as npt
 
 Number = Union[int, float]
@@ -138,3 +139,13 @@ def get_weight_matrix(h):
     np.fill_diagonal(out[:, 1:], h[1:] / 6.0)  # upper diagonal
     np.fill_diagonal(out[1:, :], h[1:] / 6.0)  # lower diagonal
     return out
+
+
+def cubic_spline_smoothing(x, y, smoothing_factor=0):
+    h = np.diff(x)
+    delta = get_delta_matrix(h)
+    weight = get_weight_matrix(h)
+    # equivalent to 'delta.T @ np.inv(weight) @ delta', just both numerically more stable and faster
+    matrix = delta.T @ la.solve(weight, delta)
+    smoothed_y = la.solve(np.identity(len(y)) + smoothing_factor * matrix, y)
+    return smoothed_y
