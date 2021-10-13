@@ -1,6 +1,4 @@
-
 from knarrow.util import get_delta_matrix, get_weight_matrix, normalize, np_windowed, projection_distance
-
 import numpy as np
 import numpy.linalg as la
 import numpy.typing as npt
@@ -95,6 +93,9 @@ def test_numerical(n):
     out1 = delta.T @ la.inv(weight) @ delta
     out2 = delta.T @ la.solve(weight, delta)
     assert np.allclose(out1, out2)
+
+
+@pytest.mark.parametrize(
     "x, target",
     [
         (np.array([[0.0, 1.0], [1.0, 1.0]]), np.sqrt(2) / 2),

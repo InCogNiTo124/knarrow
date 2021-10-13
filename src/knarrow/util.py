@@ -155,8 +155,8 @@ def cubic_spline_smoothing(x, y, smoothing_factor=0):
     matrix = delta.T @ la.solve(weight, delta)
     smoothed_y = la.solve(np.identity(len(y)) + smoothing_factor * matrix, y)
     return x, smoothed_y
-  
-  
+
+
 def projection_distance(vertices):
     """
     Return the projection distance of the point P1 to the line through both P2 and the origin.
