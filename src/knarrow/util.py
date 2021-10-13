@@ -99,3 +99,24 @@ def normalize(x):
 
     """
     return (x - x.min()) / (x.max() - x.min())
+
+
+def get_delta_matrix(h):
+    """
+    [h1, h2, h3, h4] ->
+    [[1/h1   -1/h1-1/h2      1/h2           0         0]
+     [  0       1/h2      -1/h2-1/h3        0         0]
+     [  0      0             1/h3      -1/h3-1/h4   1/h4]]
+    Args:
+        h:
+
+    Returns:
+
+    """
+    assert h.ndim == 1
+    n = len(h)
+    dest = np.zeros((n - 1, n + 1))
+    np.fill_diagonal(dest, 1 / h[:-1])
+    np.fill_diagonal(dest[:, 1:], -1 / h[1:])  # heh indexing trick
+    dest -= np.roll(dest, 1, axis=1)
+    return dest
