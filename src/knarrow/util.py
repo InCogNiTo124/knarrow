@@ -2,7 +2,7 @@ from typing import Any, Callable, Dict, Union
 
 from mypy_extensions import KwArg, VarArg
 import numpy as np
-from numpy import linalg as la
+import numpy.linalg as la
 import numpy.typing as npt
 
 Number = Union[int, float]
@@ -78,11 +78,17 @@ def prepare(
             sorted_indices = np.argsort(x)  # sort in the ascending way
             x = x[sorted_indices]
             y = y[sorted_indices]
-        assert np.all(np.diff(x))
+            assert np.all(np.diff(x))
         # all the methods should work no matter the scale of the data
         # therefore the input 2D space is transformed in [0, 1]x[0, 1] square
         x = normalize(x)
         y = normalize(y)
+
+        # optionally smooth out the data using cubic splines (custom implementation, no external libs)
+        smoothing = kwargs.get("smoothing", 0.0)
+        assert smoothing >= 0.0
+        if smoothing > 0:
+            x, y = cubic_spline_smoothing(x, y, smoothing)
         return f(x, y, **kwargs)
 
     return inner
@@ -100,6 +106,55 @@ def normalize(x):
 
     """
     return (x - x.min()) / (x.max() - x.min())
+
+
+def get_delta_matrix(h):
+    """
+    [h1, h2, h3, h4] ->
+    [[1/h1   -1/h1-1/h2      1/h2           0         0]
+    [  0       1/h2      -1/h2-1/h3        0         0]
+    [  0      0             1/h3      -1/h3-1/h4   1/h4]]
+    Args:
+        h:
+
+    Returns:
+
+    """
+    assert h.ndim == 1
+    n = len(h)
+    dest = np.zeros((n - 1, n + 1))
+    np.fill_diagonal(dest, 1 / h[:-1])
+    np.fill_diagonal(dest[:, 1:], -1 / h[1:])  # heh indexing trick
+    dest -= np.roll(dest, 1, axis=1)
+    return dest
+
+
+def get_weight_matrix(h):
+    """
+
+    Args:
+        h:
+
+    Returns:
+
+    """
+    assert h.ndim == 1
+    n = len(h)
+    out = np.zeros((n - 1, n - 1))
+    np.fill_diagonal(out, (h[:-1] + h[1:]) / 3.0)  # main diagonal
+    np.fill_diagonal(out[:, 1:], h[1:] / 6.0)  # upper diagonal
+    np.fill_diagonal(out[1:, :], h[1:] / 6.0)  # lower diagonal
+    return out
+
+
+def cubic_spline_smoothing(x, y, smoothing_factor=0):
+    h = np.diff(x)
+    delta = get_delta_matrix(h)
+    weight = get_weight_matrix(h)
+    # equivalent to 'delta.T @ np.inv(weight) @ delta', just both numerically more stable and faster
+    matrix = delta.T @ la.solve(weight, delta)
+    smoothed_y = la.solve(np.identity(len(y)) + smoothing_factor * matrix, y)
+    return x, smoothed_y
 
 
 def projection_distance(vertices):

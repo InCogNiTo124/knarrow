@@ -11,7 +11,7 @@ Detect knee points in various scenarios using a plethora of methods
 Just plugin your values in a `list`, `tuple` or an `np.ndarray` and watch `knarrow` hit the knee:
 
 ```pycon
->>> from stubs import find_knee
+>>> from knarrow import find_knee
 >>> find_knee([1, 2, 3, 4, 6])  # use a list
 3
 >>> find_knee((1, 2, 3, 4, 6))  # or a tuple
@@ -39,6 +39,8 @@ array([[0.  , 1.  ],
        [6.  , 3.6 ],
        [7.  , 4.9 ]])
 >>> find_knee(A.T)  # also works with x in the first column, y in the second column
+4
+>>> find_knee(x, y, smoothing=0.01)  # for better results use cubic spline smoothing
 4
 ```
 
