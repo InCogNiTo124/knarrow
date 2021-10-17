@@ -57,6 +57,7 @@ def prepare(
             assert x.ndim == 1 and x.shape[0] > 3
             y = np.array(args[1])
             assert y.ndim == 1 and y.shape[0] > 3
+            assert x.shape == y.shape
         elif len(args) == 1:
             argument = np.array(args[0]).squeeze()  # squeeze ensures all dimensions are > 1
             assert 1 <= argument.ndim <= 2
