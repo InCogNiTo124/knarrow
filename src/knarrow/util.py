@@ -91,7 +91,16 @@ def prepare(
         if smoothing > 0:
             x, y = cubic_spline_smoothing(x, y, smoothing)
 
-        return f(x, y, **kwargs)
+        # knee type detection and conversion to a standard type KneeType.INCREASING_CONCAVE
+        knee_type = detect_knee_type(y[0], y[1], y[-2], y[-1])
+        if knee_type == KneeType.INCREASING_CONCAVE:
+            return f(x, y, **kwargs)
+        elif knee_type == KneeType.DECREASING_CONVEX:
+            return f(x, 1 - y, **kwargs)
+        elif knee_type == KneeType.INCREASING_CONVEX:
+            return len(x) - f(x, 1 - y[::-1], **kwargs) - 1
+        elif knee_type == KneeType.DECREASING_CONCAVE:
+            return len(x) - f(x, y[::-1], **kwargs) - 1
 
     return inner
 
