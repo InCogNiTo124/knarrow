@@ -1,3 +1,4 @@
+import enum
 from typing import Any, Callable, Dict, Union
 
 from mypy_extensions import KwArg, VarArg
@@ -89,6 +90,7 @@ def prepare(
         assert smoothing >= 0.0
         if smoothing > 0:
             x, y = cubic_spline_smoothing(x, y, smoothing)
+
         return f(x, y, **kwargs)
 
     return inner
@@ -175,3 +177,17 @@ def projection_distance(vertices):
     lengths = la.norm(vectors, ord=2, axis=-1)  # this is of shape (...)
     distances = determinants / lengths
     return distances
+
+
+class KneeType(enum.Enum):
+    DECREASING_CONVEX = 0
+    INCREASING_CONCAVE = 1
+    DECREASING_CONCAVE = 2
+    INCREASING_CONVEX = 3
+
+
+def detect_knee_type(y1, y2, y3, y4):
+    is_increasing = y3 > y2  # all the points are increasing
+    is_exploding = abs(y4 - y3) > abs(y2 - y1)  # the magnitude of the increase is itself increasing #meta
+    type_code = int(is_exploding) * 2 + int(is_increasing)
+    return KneeType(type_code)
