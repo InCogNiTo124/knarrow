@@ -20,6 +20,14 @@ knarrow.main module
    :undoc-members:
    :show-inheritance:
 
+knarrow.ols module
+------------------
+
+.. automodule:: knarrow.ols
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 knarrow.util module
 -------------------
 
