@@ -126,7 +126,7 @@ mergedeep==1.3.4
     # via
     #   -r dev-requirements.txt
     #   mkdocs
-mkdocs==1.2.2
+mkdocs>=1.2.3
     # via
     #   -r dev-requirements.txt
     #   mkdocs-htmlproofer-plugin
