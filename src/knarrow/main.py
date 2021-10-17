@@ -6,7 +6,7 @@ from numpy import linalg as la
 import numpy.typing as npt
 
 from .c_method import c_method  # noqa
-from .util import np_anchored, np_windowed, prepare
+from .util import np_anchored, np_windowed, prepare, projection_distance
 
 
 def double_triangle_area(vertices):
@@ -134,6 +134,18 @@ def distance(x, y, **kwargs):
     return np.argmax(distances).item()
 
 
+def distance_adjacent(x, y, **kwargs):
+    assert len(kwargs) == 0
+    indices = np_windowed(len(x), 3)
+    x_windowed = x[indices]  # shape = (len(x), 3)
+    y_windowed = y[indices]  # shape = (len(x), 3)
+    points = np.stack((x_windowed, y_windowed), axis=-1)  # shape = (len(x), 3, 2)
+    translated_points = points - points[:, [0], :]  # anchor all the triplets at the origin. The list is important!
+    translated_points = translated_points[..., 1:, :]  # remove the origin point, now shape = (len(x), 2, 2)
+    distances = projection_distance(translated_points)
+    return np.argmax(distances).item()
+
+
 @prepare
 def find_knee(x, y, method="menger_successive", **kwargs):
     """
@@ -147,6 +159,6 @@ def find_knee(x, y, method="menger_successive", **kwargs):
 
     Returns: int, the index of the knee
     """
-    assert method in ["menger_successive", "menger_anchored", "angle", "distance", "c_method"]
+    assert method in ["menger_successive", "menger_anchored", "angle", "distance", "c_method", "distance_adjacent"]
     function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = globals()[method]
     return function(x, y, **kwargs)

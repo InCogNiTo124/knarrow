@@ -8,6 +8,8 @@ import numpy.typing as npt
 
 Number = Union[int, float]
 
+EPS = 1e-5
+
 
 def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 1) -> npt.NDArray[np.int_]:
     """
@@ -185,7 +187,7 @@ def projection_distance(vertices):
     determinants = np.abs(la.det(vertices))  # this is of shape (...), the last two are not existent anymore
     vectors = vertices[..., 1, :]  # select the second row of all the matrices. this is of shape (..., 2)
     lengths = la.norm(vectors, ord=2, axis=-1)  # this is of shape (...)
-    distances = determinants / lengths
+    distances = determinants / (lengths + EPS)
     return distances
 
 
