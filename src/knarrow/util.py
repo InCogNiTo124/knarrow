@@ -161,8 +161,8 @@ def projection_distance(vertices):
     """
     Return the projection distance of the point P1 to the line through both P2 and the origin.
     Args:
-        vertices: np.ndarray of dimensions (..., 2, 2), coordinates of the points such that vertices[0] are the
-        coordinates of the point we wish to project on a line defined with the origin and vertices[1]
+        vertices: np.ndarray of dimensions (..., 2, 2), coordinates of the points such that vertices[..., 0, :] are the
+        coordinates of the point we wish to project on a line defined with the origin and vertices[..., 1, :]
 
     Returns: distances, np.ndarray, one dimensional array denoting the distance the point vertices[0] must travel to be
     projected onto the line defined by vertices[1] and the origin
