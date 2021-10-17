@@ -5,7 +5,8 @@ import numpy as np
 from numpy import linalg as la
 import numpy.typing as npt
 
-from .util import normalize, np_anchored, np_windowed, prepare
+from .c_method import c_method  # noqa
+from .util import np_anchored, np_windowed, prepare
 
 
 def double_triangle_area(vertices):
@@ -53,7 +54,6 @@ def get_curvature(vertices):
     return curvature
 
 
-@prepare
 def menger_successive(x, y, **kwargs):
     """
     Find a knee using the Menger curvature on the three successive points
@@ -72,16 +72,15 @@ def menger_successive(x, y, **kwargs):
     return curve_scores.argmax().item() + 1
 
 
-@prepare
 def menger_anchored(x, y, **kwargs):
     """
-        Find a knee using the Menger curvature on the first point, last point, and varying the middle point.
-        More resistant to the noise in the data than menger_successive
+    Find a knee using the Menger curvature on the first point, last point, and varying the middle point.
+    More resistant to the noise in the data than menger_successive
 
-        Args:
-            x: npt.NDArray, the x coordinates of the points
-            y: npt.NDArray, the y coordinates of the points
-            **kwargs: possible additional arguments (none are used)
+    Args:
+        x: npt.NDArray, the x coordinates of the points
+        y: npt.NDArray, the y coordinates of the points
+        **kwargs: possible additional arguments (none are used)
     e
         Returns: int, the index of the knee
     """
@@ -95,7 +94,6 @@ def menger_anchored(x, y, **kwargs):
     return curve_scores.argmax().item() + 1
 
 
-@prepare
 def angle(x, y, **kwargs):
     """
     Find a knee by looking at the maximum change of the angle between neighbouring points
@@ -117,7 +115,6 @@ def angle(x, y, **kwargs):
     return max_diff + 1
 
 
-@prepare
 def distance(x, y, **kwargs):
     """
     Find a knee by finding a point which is most distant from the line y=x (after normalizing the inputs)
@@ -133,9 +130,7 @@ def distance(x, y, **kwargs):
     """
     assert len(kwargs) == 0
     assert x.shape == y.shape
-    x_scaled = normalize(x)
-    y_scaled = normalize(y)
-    distances = abs(y_scaled - x_scaled)
+    distances = abs(y - x)
     return np.argmax(distances).item()
 
 
@@ -152,6 +147,6 @@ def find_knee(x, y, method="menger_successive", **kwargs):
 
     Returns: int, the index of the knee
     """
-    assert method in ["menger_successive", "menger_anchored", "angle", "distance_vert"]
-    function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = locals()[method]
+    assert method in ["menger_successive", "menger_anchored", "angle", "distance", "c_method"]
+    function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = globals()[method]
     return function(x, y, **kwargs)

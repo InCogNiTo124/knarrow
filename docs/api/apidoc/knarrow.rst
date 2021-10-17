@@ -4,6 +4,14 @@ knarrow package
 Submodules
 ----------
 
+knarrow.c\_method module
+------------------------
+
+.. automodule:: knarrow.c_method
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 knarrow.main module
 -------------------
 
