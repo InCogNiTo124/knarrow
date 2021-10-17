@@ -1,4 +1,12 @@
-from knarrow.util import get_delta_matrix, get_weight_matrix, normalize, np_windowed, projection_distance
+from knarrow.util import (
+    KneeType,
+    detect_knee_type,
+    get_delta_matrix,
+    get_weight_matrix,
+    normalize,
+    np_windowed,
+    projection_distance,
+)
 import numpy as np
 import numpy.linalg as la
 import numpy.typing as npt
@@ -122,3 +130,17 @@ def test_projection_distance(x, target):
         assert result.ndim == target.ndim
         assert result.shape == target.shape
     assert np.allclose(result, target)
+
+
+@pytest.mark.parametrize(
+    "x,target",
+    [
+        ((0.0, 1.0, 3.0, 7.0), KneeType.INCREASING_CONVEX),
+        ((7.0, 3.0, 1.0, 0.0), KneeType.DECREASING_CONVEX),
+        ((1.0, 4.0, 6.0, 7.0), KneeType.INCREASING_CONCAVE),
+        ((7.0, 6.0, 4.0, 1.0), KneeType.DECREASING_CONCAVE),
+    ],
+)
+def test_find_knee(x, target):
+    output = detect_knee_type(*x)
+    assert output == target

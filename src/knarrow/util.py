@@ -1,3 +1,4 @@
+import enum
 from typing import Any, Callable, Dict, Union
 
 from mypy_extensions import KwArg, VarArg
@@ -89,7 +90,17 @@ def prepare(
         assert smoothing >= 0.0
         if smoothing > 0:
             x, y = cubic_spline_smoothing(x, y, smoothing)
-        return f(x, y, **kwargs)
+
+        # knee type detection and conversion to a standard type KneeType.INCREASING_CONCAVE
+        knee_type = detect_knee_type(y[0], y[1], y[-2], y[-1])
+        if knee_type == KneeType.INCREASING_CONCAVE:
+            return f(x, y, **kwargs)
+        elif knee_type == KneeType.DECREASING_CONVEX:
+            return f(x, 1 - y, **kwargs)
+        elif knee_type == KneeType.INCREASING_CONVEX:
+            return len(x) - f(x, 1 - y[::-1], **kwargs) - 1
+        elif knee_type == KneeType.DECREASING_CONCAVE:
+            return len(x) - f(x, y[::-1], **kwargs) - 1
 
     return inner
 
@@ -161,8 +172,8 @@ def projection_distance(vertices):
     """
     Return the projection distance of the point P1 to the line through both P2 and the origin.
     Args:
-        vertices: np.ndarray of dimensions (..., 2, 2), coordinates of the points such that vertices[0] are the
-        coordinates of the point we wish to project on a line defined with the origin and vertices[1]
+        vertices: np.ndarray of dimensions (..., 2, 2), coordinates of the points such that vertices[..., 0, :] are the
+        coordinates of the point we wish to project on a line defined with the origin and vertices[..., 1, :]
 
     Returns: distances, np.ndarray, one dimensional array denoting the distance the point vertices[0] must travel to be
     projected onto the line defined by vertices[1] and the origin
@@ -175,3 +186,17 @@ def projection_distance(vertices):
     lengths = la.norm(vectors, ord=2, axis=-1)  # this is of shape (...)
     distances = determinants / lengths
     return distances
+
+
+class KneeType(enum.Enum):
+    DECREASING_CONVEX = 0
+    INCREASING_CONCAVE = 1
+    DECREASING_CONCAVE = 2
+    INCREASING_CONVEX = 3
+
+
+def detect_knee_type(y1, y2, y3, y4):
+    is_increasing = y3 > y2  # all the points are increasing
+    is_exploding = abs(y4 - y3) > abs(y2 - y1)  # the magnitude of the increase is itself increasing #meta
+    type_code = int(is_exploding) * 2 + int(is_increasing)
+    return KneeType(type_code)

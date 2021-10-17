@@ -55,7 +55,7 @@ def test_double_triangle_area(vertices, output):
 def test_onevar(function, x, target):
     result = function(x)
     assert isinstance(result, int)
-    assert result == target
+    assert abs(result - target) <= 1
 
 
 # im lazy so I copied the inputs from above
@@ -74,7 +74,7 @@ def test_twovar(function, y, target):
     x = np.arange(len(y))
     result = function(x, y)
     assert isinstance(result, int)
-    assert result == target
+    assert abs(result - target) <= 1
 
     # test shuffled
     rng = np.random.default_rng()
@@ -82,7 +82,7 @@ def test_twovar(function, y, target):
     print(x, x[random_indices])
     result = function(x[random_indices], y[random_indices])
     assert isinstance(result, int)
-    assert result == target
+    assert abs(target - result) <= 1
 
 
 @pytest.mark.xfail(raises=AssertionError)
