@@ -2,7 +2,15 @@ from knarrow.main import double_triangle_area, find_knee, get_squared_vector_len
 import numpy as np
 import pytest
 
-ALL_METHODS = ["menger_successive", "menger_anchored", "angle", "distance", "c_method", "distance_adjacent"]
+ALL_METHODS = [
+    "menger_successive",
+    "menger_anchored",
+    "angle",
+    "distance",
+    "c_method",
+    "distance_adjacent",
+    "ols_swiping",
+]
 
 
 @pytest.mark.parametrize(

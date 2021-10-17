@@ -6,6 +6,7 @@ from numpy import linalg as la
 import numpy.typing as npt
 
 from .c_method import c_method  # noqa
+from .ols import ols_swiping  # noqa
 from .util import np_anchored, np_windowed, prepare, projection_distance
 
 
@@ -159,6 +160,14 @@ def find_knee(x, y, method="menger_successive", **kwargs):
 
     Returns: int, the index of the knee
     """
-    assert method in ["menger_successive", "menger_anchored", "angle", "distance", "c_method", "distance_adjacent"]
+    assert method in [
+        "menger_successive",
+        "menger_anchored",
+        "angle",
+        "distance",
+        "c_method",
+        "distance_adjacent",
+        "ols_swiping",
+    ]
     function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = globals()[method]
     return function(x, y, **kwargs)
