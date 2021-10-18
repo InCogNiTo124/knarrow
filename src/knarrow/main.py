@@ -1,6 +1,3 @@
-from typing import Callable
-
-from mypy_extensions import KwArg
 import numpy as np
 from numpy import linalg as la
 import numpy.typing as npt
@@ -169,5 +166,5 @@ def find_knee(x, y, method="menger_successive", **kwargs):
         "distance_adjacent",
         "ols_swiping",
     ]
-    function: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], KwArg()], int] = globals()[method]
+    function = globals()[method]
     return function(x, y, **kwargs)

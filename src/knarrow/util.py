@@ -1,7 +1,6 @@
 import enum
-from typing import Any, Callable, Dict, Union
+from typing import Union
 
-from mypy_extensions import KwArg, VarArg
 import numpy as np
 import numpy.linalg as la
 import numpy.typing as npt
@@ -49,10 +48,8 @@ def np_anchored(length: int) -> npt.NDArray[np.int_]:
     return indices
 
 
-def prepare(
-    f: Callable[[npt.NDArray[np.float_], npt.NDArray[np.float_], str, KwArg(Dict[Any, Any])], int]
-) -> Callable[[VarArg(), KwArg()], int]:
-    def inner(*args: VarArg(), **kwargs: KwArg()) -> int:
+def prepare(f):
+    def inner(*args, **kwargs):
         assert 1 <= len(args) <= 2
         if len(args) == 2:
             x = np.array(args[0])
