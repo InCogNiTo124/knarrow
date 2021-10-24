@@ -86,7 +86,7 @@ def prepare(f):
         y = normalize(y)
 
         # optionally smooth out the data using cubic splines (custom implementation, no external libs)
-        smoothing = kwargs.get("smoothing", 0.0)
+        smoothing = kwargs.pop("smoothing", 0.0)
         assert smoothing >= 0.0
         if smoothing > 0:
             x, y = cubic_spline_smoothing(x, y, smoothing)

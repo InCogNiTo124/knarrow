@@ -17,10 +17,6 @@ def d2f_dc2(x, c):
     return (x - 1) * x * np.exp(c) * (t - 1) / (t + 1) ** 3
 
 
-def e(y, x, c):
-    return np.mean((y - f(x, c)) ** 2) / 2.0
-
-
 def de_dc(y, x, c):
     return np.mean((f(x, c) - y) * df_dc(x, c))
 

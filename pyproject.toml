@@ -31,6 +31,11 @@ skip_gitignore = true
 
 [tool.coverage.run]
 branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 95
+
 [tool.tbump]
 # Uncomment this if your project is hosted on GitHub:
 github_url = "https://github.com/InCogNiTo124/knarrow"
