@@ -84,12 +84,14 @@ def prepare(f):
         # therefore the input 2D space is transformed in [0, 1]x[0, 1] square
         x = normalize(x)
         y = normalize(y)
+        print(y)
 
         # optionally smooth out the data using cubic splines (custom implementation, no external libs)
         smoothing = kwargs.pop("smoothing", 0.0)
         assert smoothing >= 0.0
         if smoothing > 0:
             x, y = cubic_spline_smoothing(x, y, smoothing)
+            print(y)
 
         # knee type detection and conversion to a standard type KneeType.INCREASING_CONCAVE
         knee_type = detect_knee_type(y[0], y[1], y[-2], y[-1])
