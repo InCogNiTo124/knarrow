@@ -61,6 +61,7 @@ def test_onevar(method, x, target):
 
 # im lazy so I copied the inputs from above
 # I think I'll need to add more tests soon...
+@pytest.mark.parametrize("smoothing", [0.0, 0.001])
 @pytest.mark.parametrize("method", ALL_METHODS)
 @pytest.mark.parametrize(
     "y,target",
@@ -70,17 +71,16 @@ def test_onevar(method, x, target):
         (np.array([1, 2, 3, 4, 5, 7]), 4),
     ],
 )
-def test_twovar(method, y, target):
+def test_twovar(smoothing, method, y, target):
     # test normally
     x = np.arange(len(y))
-    result = find_knee(x, y, method=method)
+    result = find_knee(x, y, method=method, smoothing=smoothing)
     assert isinstance(result, int)
     assert abs(result - target) <= 1
 
     # test shuffled
     rng = np.random.default_rng()
     random_indices = rng.choice(x, len(x), replace=False)
-    print(x, x[random_indices])
     result = find_knee(x[random_indices], y[random_indices], method=method)
     assert isinstance(result, int)
     assert abs(target - result) <= 1
