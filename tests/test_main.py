@@ -81,7 +81,6 @@ def test_twovar(smoothing, method, y, target):
     # test shuffled
     rng = np.random.default_rng()
     random_indices = rng.choice(x, len(x), replace=False)
-    print(x, x[random_indices])
     result = find_knee(x[random_indices], y[random_indices], method=method)
     assert isinstance(result, int)
     assert abs(target - result) <= 1

@@ -14,7 +14,6 @@ def r_squared(x, y):
         ssr = 0
     sst = np.var(y, ddof=n - 1)
     r2_1 = (1 - ssr / sst).item()
-    print(ssr, sst, r2_1)
     corr = np.corrcoef(w @ xx, y)[0, 1]
     r2_2 = corr ** 2
     assert np.allclose(r2_1, r2_2)

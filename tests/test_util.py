@@ -88,8 +88,6 @@ def test_get_delta_matrix(x, target):
 def test_get_weight_matrix(x, target):
     n = len(x)
     out = get_weight_matrix(x)
-    print(out)
-    print(target)
     assert out.shape == (n - 1, n - 1)
     assert np.allclose(out, target)
 
