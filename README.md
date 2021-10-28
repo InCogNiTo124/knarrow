@@ -1,4 +1,13 @@
 # knarrow
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/knarrow)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/knarrow)
+![PyPI - License](https://img.shields.io/pypi/l/knarrow)
+![PyPI](https://img.shields.io/pypi/v/knarrow)
+![PyPI - Format](https://img.shields.io/pypi/format/knarrow)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/InCogNiTo124/knarrow)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/InCogNiTo124/knarrow/python)
+![Read the Docs](https://img.shields.io/readthedocs/knarrow)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fknarrow.readthedocs.org)
 
 Shoot a `knarrow` to the knee ;)
 
