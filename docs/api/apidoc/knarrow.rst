@@ -4,6 +4,14 @@ knarrow package
 Submodules
 ----------
 
+knarrow.angle\_method module
+----------------------------
+
+.. automodule:: knarrow.angle_method
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 knarrow.c\_method module
 ------------------------
 
@@ -12,10 +20,26 @@ knarrow.c\_method module
    :undoc-members:
    :show-inheritance:
 
+knarrow.distance\_method module
+-------------------------------
+
+.. automodule:: knarrow.distance_method
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 knarrow.main module
 -------------------
 
 .. automodule:: knarrow.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+knarrow.menger module
+---------------------
+
+.. automodule:: knarrow.menger
    :members:
    :undoc-members:
    :show-inheritance:
