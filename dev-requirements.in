@@ -23,7 +23,7 @@ isort
 ## API.
 Sphinx
 sphinx-autobuild
-furo
+insegel
 
 ## User Guide.
 mkdocs-material
