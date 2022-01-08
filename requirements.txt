@@ -1,2 +1,5 @@
-numpy==1.21
-importlib-metadata<4.3
+# numpy < "1.22" ; python_version == "3.7"
+# numpy >= "1.22" ; python_version != "3.7"
+numpy
+importlib-metadata < "3.9" ; python_version == "3.10"
+importlib-metadata >= "3.9" ; python_version != "3.10"
