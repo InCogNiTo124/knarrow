@@ -28,6 +28,14 @@ knarrow.distance\_method module
    :undoc-members:
    :show-inheritance:
 
+knarrow.kneedle module
+----------------------
+
+.. automodule:: knarrow.kneedle
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 knarrow.main module
 -------------------
 

@@ -1,6 +1,7 @@
 from .angle_method import angle  # noqa
 from .c_method import c_method  # noqa
 from .distance_method import distance, distance_adjacent  # noqa
+from .kneedle import kneedle  # noqa
 from .menger import menger_anchored, menger_successive  # noqa
 from .ols import ols_swiping  # noqa
 from .util import prepare
@@ -24,6 +25,7 @@ def find_knee(x, y, method="menger_successive", **kwargs):
         "c_method",
         "distance",
         "distance_adjacent",
+        "kneedle",
         "menger_anchored",
         "menger_successive",
         "ols_swiping",
