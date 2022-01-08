@@ -3,12 +3,13 @@ import numpy as np
 import pytest
 
 ALL_METHODS = [
-    "menger_successive",
-    "menger_anchored",
     "angle",
-    "distance",
     "c_method",
+    "distance",
     "distance_adjacent",
+    "kneedle",
+    "menger_anchored",
+    "menger_successive",
     "ols_swiping",
 ]
 
