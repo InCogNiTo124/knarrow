@@ -53,4 +53,9 @@ array([[0.  , 1.  ],
 4
 ```
 
+### Similar projects
+
+While I've come up with most of these methods by myself, I am not the only one. Here is a (non-comprehensive) list of projects I've found that implement a similar funcionality and may have been an inspiration for me:
+- [mariolpantunes/knee](https://github.com/mariolpantunes/knee)
+
 Note: this project was bootstrapped by [python-blueprint](https://github.com/johnthagen/python-blueprint)
