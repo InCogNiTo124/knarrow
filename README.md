@@ -8,6 +8,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/InCogNiTo124/knarrow/python)
 ![Read the Docs](https://img.shields.io/readthedocs/knarrow)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fknarrow.readthedocs.org)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Shoot a `knarrow` to the knee ;)
 
