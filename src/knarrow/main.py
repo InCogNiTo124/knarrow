@@ -13,12 +13,12 @@ def find_knee(x, y, method="menger_successive", **kwargs):
     Public method for finding the knee
 
     Args:
-        x: npt.NDArray, the x coordinates of the points
-        y: npt.NDArray, the y coordinates of the points
-        method: str, denotes the method to be used (default: menger_successive)
+        x: `np.ndarray`, the x coordinates of the points
+        y: `np.ndarray`, the y coordinates of the points
+        method: `str`, denotes the method to be used (default: menger_successive)
         **kwargs: possible additional arguments for the knee-finding method
 
-    Returns: int, the index of the knee
+    Returns: `int`, the index of the knee
     """
     assert method in [
         "angle",

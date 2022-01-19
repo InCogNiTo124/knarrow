@@ -8,8 +8,8 @@ def angle(x, y, **kwargs):
     Quite sensitive to noise, use with cubic spline smoothing.
 
     Args:
-        x: npt.NDArray, the x coordinates of the points
-        y: npt.NDArray, the y coordinates of the points
+        x: `np.ndarray`, the x coordinates of the points
+        y: `np.ndarray`, the y coordinates of the points
         **kwargs: possible additional arguments (none are used)
 
     Returns: int, the index of the knee

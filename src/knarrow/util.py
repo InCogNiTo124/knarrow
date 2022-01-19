@@ -10,19 +10,19 @@ Number = Union[int, float]
 EPS = 1e-5
 
 
-def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 1) -> npt.NDArray[np.int_]:
+def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 1) -> np.ndarray:
     """
     Return indices x such that every row in array[x] is a windowed slice of the array
     Helper function which uses numpy broadcasting to work
     Adapted from: https://stackoverflow.com/a/42258242
 
     Args:
-        length: int, the total length of the array to be indexed
-        window_size: int, the size of the window to be slided across the array
-        stride: int, the size of the "jumps" between the consecutive windows (default: 1)
-        dilation: int, the distance between the elements in the window (default: 1)
+        length: `int`, the total length of the array to be indexed
+        window_size: `int`, the size of the window to be slided across the array
+        stride: `int`, the size of the "jumps" between the consecutive windows (default: 1)
+        dilation: `int`, the distance between the elements in the window (default: 1)
 
-    Returns: npt.NDArray, indices for windowing an array
+    Returns: `np.ndarray`, indices for windowing an array
     """
     base_indices: npt.NDArray[np.int_] = stride * np.arange((length - window_size) // (stride * dilation) + 1).reshape(
         -1, 1
@@ -37,8 +37,8 @@ def np_anchored(length: int) -> npt.NDArray[np.int_]:
     Helper function which uses numpy broadcasting to work
 
     Args:
-        length: int, the total length of the array to be indexed in the anchored way
-    Returns: npt.NDArray, indices for windowing an array
+        length: `int`, the total length of the array to be indexed in the anchored way
+    Returns: `np.ndarray`, indices for windowing an array
 
     """
     indices = list(range(1, length - 1))
