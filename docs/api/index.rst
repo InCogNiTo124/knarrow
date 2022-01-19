@@ -56,6 +56,8 @@ Available methods:
 - ``menger_succesive``
 - ``ols_swiping``
 
+.. mdinclude:: ../../README.md
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

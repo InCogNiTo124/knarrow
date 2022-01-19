@@ -24,6 +24,7 @@ isort
 Sphinx
 sphinx-autobuild
 furo
+m2r2
 
 ## User Guide.
 mkdocs-material
