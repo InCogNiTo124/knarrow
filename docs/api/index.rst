@@ -6,10 +6,13 @@
 Welcome to knarrow's documentation!
 ===================================
 
+.. mdinclude:: ../../README.md
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   apidoc/c_method.rst
    apidoc/modules.rst
 
 

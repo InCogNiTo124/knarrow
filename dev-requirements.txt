@@ -24,6 +24,8 @@ isort
 Sphinx
 sphinx-autobuild
 furo
+insegel
+m2r2
 
 ## User Guide.
 mkdocs-material
