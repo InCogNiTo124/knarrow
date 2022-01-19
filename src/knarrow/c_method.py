@@ -91,7 +91,8 @@ def newton_raphson(x, y):
         x: `np.ndarray`, the ground truth `x` coordinates
         y: `np.ndarray`, the ground truth `y` coordinates
 
-    Returns: `float`, the optimal shape parameter `c` which minimizes the squared error, up to a predefined tolerance level
+    Returns: `float`, the optimal shape parameter `c` which minimizes the squared error, up to a predefined tolerance
+    level
     """
     c = 0
     new_c = 3
