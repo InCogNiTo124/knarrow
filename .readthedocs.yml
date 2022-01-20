@@ -8,8 +8,9 @@ build:
     python: "3.10"
 
 sphinx:
-  configuration: docs/conf.py
+  configuration: docs/api/conf.py
 
 python:
   install:
-    - requirements: "requirements-dev.txt"
+    - requirements: "dev-requirements.txt"
+    - requirements: "requirements.txt"
