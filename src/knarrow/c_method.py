@@ -88,16 +88,19 @@ def d2e_dc2(y, x, c):
 
 def newton_raphson(x, y):
     """
-    The implementation of the `Newton-Raphson <https://en.wikipedia.org/wiki/Newton%27s_method>`_ optimization procedure.
-    It fits the knee curve :math:`f(x)` to the :math:`y` s of the corresponding :math:`x` s by tweaking the shape parameter :math:`c` from an
-    initial guess.
+    The implementation of the `Newton-Raphson <https://en.wikipedia.org/wiki/Newton%27s_method>`_ optimization
+    procedure.
+    It fits the knee curve :math:`f(x)` to the :math:`y` s of the corresponding :math:`x` s by tweaking the shape
+    parameter :math:`c` from an initial guess.
 
     Args:
         x (``np.ndarray``): the ground truth :math:`x` coordinates
         y (``np.ndarray``): the ground truth :math:`y` coordinates
 
     Returns:
-        ``float``: the optimal shape parameter :math:`c` which minimizes the squared error, up to a predefined tolerance level
+        ``float``: the optimal shape parameter :math:`c` which minimizes the squared error, up to a predefined
+        tolerance level
+
     """
     c = 0
     new_c = 3

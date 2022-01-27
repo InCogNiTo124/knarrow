@@ -11,7 +11,9 @@ def r_squared(x, y):
         y (``np.ndarray``): The :math:`y` coordinates of the points
 
     Returns:
-         ``float``: The :math:`R^2` measure of a fit. Bounded by :math:`\\left[0, 1\\right]`. The closer :math:`R^2` is to :math:`1`, the better the fit.
+         ``float``: The :math:`R^2` measure of a fit. Bounded by :math:`\\left[0, 1\\right]`. The closer :math:`R^2` is
+         to :math:`1`, the better the fit.
+
     """
     x = x.ravel()
     y = y.ravel()

@@ -202,7 +202,9 @@ def projection_distance(vertices):
                                     line defined with the origin and ``vertices[..., 1, :]``
 
     Returns:
-        ``np.ndarray``: one dimensional array denoting the distance the point ``vertices[..., 0, :]`` must travel to be projected onto the line defined by ``vertices[..., 1, :]`` and the origin
+        ``np.ndarray``: one dimensional array denoting the distance the point ``vertices[..., 0, :]`` must travel to be
+        projected onto the line defined by ``vertices[..., 1, :]`` and the origin
+
     """
     # vertices is of shape (..., 2, 2)
     assert vertices.ndim >= 2

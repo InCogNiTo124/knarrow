@@ -7,8 +7,8 @@ def distance(x, y, **kwargs):
     """
     Find a knee by finding a point which is most distant from the line :math:`y=x` (after normalizing the inputs)
 
-    Fun fact: *vertical* distance of a point P from line :math:`y=x` is just a scaled version of the *orthogonal* distance of
-    the same point P from line :math:`y=x`.
+    Fun fact: *vertical* distance of a point P from line :math:`y=x` is just a scaled version of the *orthogonal*
+    distance of the same point P from line :math:`y=x`.
 
     Args:
         x (``np.ndarray``): the :math:`x` coordinates of the points
