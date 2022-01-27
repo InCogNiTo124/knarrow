@@ -17,12 +17,13 @@ def np_windowed(length: int, window_size: int, stride: int = 1, dilation: int = 
     Adapted from: https://stackoverflow.com/a/42258242
 
     Args:
-        length: ``int``, the total length of the array to be indexed
-        window_size: ``int``, the size of the window to be slided across the array
-        stride: ``int``, the size of the "jumps" between the consecutive windows (default: 1)
-        dilation: ``int``, the distance between the elements in the window (default: 1)
+        length (``int``): the total length of the array to be indexed
+        window_size (``int``): the size of the window to be slided across the array
+        stride (``int``): the size of the "jumps" between the consecutive windows. Defaults to 1
+        dilation (``int``): the distance between the elements in the window. Defaults to 1
 
-    Returns: ``np.ndarray``, indices for windowing an array
+    Returns:
+        ``np.ndarray``: indices for windowing an array
     """
     base_indices: npt.NDArray[np.int_] = stride * np.arange((length - window_size) // (stride * dilation) + 1).reshape(
         -1, 1
@@ -37,8 +38,9 @@ def np_anchored(length: int) -> npt.NDArray[np.int_]:
     Helper function which uses numpy broadcasting to work
 
     Args:
-        length: ``int``, the total length of the array to be indexed in the anchored way
-    Returns: ``np.ndarray``, indices for windowing an array
+        length (``int``): the total length of the array to be indexed in the anchored way
+    Returns:
+        ``np.ndarray``: indices for windowing an array
 
     """
     indices = list(range(1, length - 1))
@@ -108,28 +110,35 @@ def prepare(f):
 def normalize(x):
     """
     Helper function for normalizing the inputs.
+
     Normalization is an affine transformation such that the minimal element of x maps to 0, and maximal element of x
     maps to 1
+
     Args:
-        x: npt.NDArray, the array to be normalized
+        x (``np.ndarray``): the array to be normalized
 
-    Returns: npt.NDArray, a normalized array such that the minimum is 0 and the maximum is 1
-
+    Returns:
+         ``np.ndarray``: a normalized array such that the minimum is 0 and the maximum is 1
     """
     return (x - x.min()) / (x.max() - x.min())
 
 
 def get_delta_matrix(h):
     """
+    Creates :math:`\\Delta` matrix. Used for cubic spline smoothing.
+
+    Adapted from https://en.wikipedia.org/wiki/Smoothing_spline#Derivation_of_the_cubic_smoothing_spline
+
     [h1, h2, h3, h4] ->
     [[1/h1   -1/h1-1/h2      1/h2           0         0]
     [  0       1/h2      -1/h2-1/h3        0         0]
     [  0      0             1/h3      -1/h3-1/h4   1/h4]]
+
     Args:
-        h:
+        h (``np.ndarray``): the differences vector
 
     Returns:
-
+        ``np.ndarray``: the :math:`\\Delta` matrix
     """
     assert h.ndim == 1
     n = len(h)
@@ -142,11 +151,15 @@ def get_delta_matrix(h):
 
 def get_weight_matrix(h):
     """
+    Creates the weight matrix. Used for cubic spline smoothing.
+
+    Adapted from https://en.wikipedia.org/wiki/Smoothing_spline#Derivation_of_the_cubic_smoothing_spline
 
     Args:
-        h:
+        h (``np.ndarray``): the differences vector
 
     Returns:
+        ``np.ndarray``: the weight matrix :math:`W`
 
     """
     assert h.ndim == 1
@@ -159,6 +172,17 @@ def get_weight_matrix(h):
 
 
 def cubic_spline_smoothing(x, y, smoothing_factor=0):
+    """
+    Smoothes the :math:`y` vecetor by minimizing the second derivative.
+
+    Args:
+        x (``np.ndarray``): the :math:`x` coordinates of the points
+        y (``np.ndarray``): the :math:`y` coordinates of the points
+        smoothing_factor (``float``): the cubic spline smoothing hyperparameter
+
+    Returns:
+        :obj:`tuple` of ``np.ndarray``: the :math:`x` and :math:`y` coordinates of the smoothed points
+    """
     h = np.diff(x)
     delta = get_delta_matrix(h)
     weight = get_weight_matrix(h)
@@ -171,12 +195,14 @@ def cubic_spline_smoothing(x, y, smoothing_factor=0):
 def projection_distance(vertices):
     """
     Return the projection distance of the point P1 to the line through both P2 and the origin.
-    Args:
-        vertices: np.ndarray of dimensions (..., 2, 2), coordinates of the points such that vertices[..., 0, :] are the
-        coordinates of the point we wish to project on a line defined with the origin and vertices[..., 1, :]
 
-    Returns: distances, np.ndarray, one dimensional array denoting the distance the point vertices[0] must travel to be
-    projected onto the line defined by vertices[1] and the origin
+    Args:
+        vertices (``np.ndarray``): array of shape ``(..., 2, 2)``. Coordinates of the points such that
+                                    ``vertices[..., 0, :]`` are the coordinates of the point we wish to project on a
+                                    line defined with the origin and ``vertices[..., 1, :]``
+
+    Returns:
+        ``np.ndarray``: one dimensional array denoting the distance the point ``vertices[..., 0, :]`` must travel to be projected onto the line defined by ``vertices[..., 1, :]`` and the origin
     """
     # vertices is of shape (..., 2, 2)
     assert vertices.ndim >= 2
@@ -196,6 +222,20 @@ class KneeType(enum.Enum):
 
 
 def detect_knee_type(y1, y2, y3, y4):
+    """
+    Detects the type of a knee using the first two and the last two points.
+
+    Simplifies the problem by assuming noiseless input.
+
+    Args:
+        y1 (``float``): the :math:`y` coordinate of the first point
+        y2:(``float``): the :math:`y` coordinate of the second point
+        y3:(``float``): the :math:`y` coordinate of the second-to-last point
+        y4:(``float``): the :math:`y` coordinate of the last point
+
+    Returns:
+        :obj:`KneeType`: the type of the knee detected
+    """
     is_increasing = y3 > y2  # all the points are increasing
     is_exploding = abs(y4 - y3) > abs(y2 - y1)  # the magnitude of the increase is itself increasing #meta
     type_code = int(is_exploding) * 2 + int(is_increasing)
