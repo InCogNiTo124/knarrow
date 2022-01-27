@@ -3,14 +3,15 @@ import numpy as np
 
 def kneedle(x, y, **kwargs):
     """
-    Kneedle method from DOI: 10.1109/ICDCSW.2011.20
+    Kneedle method from https://doi.org/10.1109/ICDCSW.2011.20
 
     Args:
-        x: the x coordinates
-        y:  the y coordinates
+        x (``np.ndarray``): the :math:`x` coordinates of the points
+        y (``np.ndarray``):  the :math:`y` coordinates of the points
         **kwargs:
 
-    Returns: int, the index of the knee
+    Returns:
+        ``int``: the index of the knee
     """
     n = len(x)
     s = kwargs.get("S", 1.0)

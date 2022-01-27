@@ -3,6 +3,16 @@ from numpy import linalg as la
 
 
 def r_squared(x, y):
+    """
+    Fit a linear regression to :math:`y` and return the :math:`R^2` statistical measure of a fit of a linear regression
+
+    Args:
+        x (``np.ndarray``): The :math:`x` coordinates of the points
+        y (``np.ndarray``): The :math:`y` coordinates of the points
+
+    Returns:
+         ``float``: The :math:`R^2` measure of a fit. Bounded by :math:`\\left[0, 1\\right]`. The closer :math:`R^2` is to :math:`1`, the better the fit.
+    """
     x = x.ravel()
     y = y.ravel()
     assert x.ndim == y.ndim
@@ -21,6 +31,22 @@ def r_squared(x, y):
 
 
 def ols_swiping(x, y, **kwargs):
+    """
+    Performs OLS swiping method.
+
+    By first selecting a pivot point, all the data points are implicitly split into two parts: the left one and the
+    right one. Then, the algorithm regresses a line onto :math:`y` with respect to :math:`x` for both parts using
+    ordinary least squares. If both lines fit quite well, meaning the :math:`R^2` for both left and the right fit is
+    particularly high, the pivot point is declared as a knee.
+
+    Args:
+        x (``np.ndarray``): the :math:`x` coordinates of the points
+        y (``np.ndarray``): the :math:`y` coordinates of the points
+        **kwargs: possible additional arguments (none are used)
+
+    Returns:
+        ``int``: the index of the knee
+    """
     assert len(kwargs) == 0
     n = len(x)
     # some python magic

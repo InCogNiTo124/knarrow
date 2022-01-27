@@ -3,16 +3,17 @@ import numpy as np
 
 def angle(x, y, **kwargs):
     """
-    Find a knee by looking at the maximum change of the angle of the line going through consecutive point pairs
+    Find a knee by looking at the maximum change of the angle of the line going through consecutive point pairs.
 
     Quite sensitive to noise, use with cubic spline smoothing.
 
     Args:
-        x: `np.ndarray`, the x coordinates of the points
-        y: `np.ndarray`, the y coordinates of the points
+        x (``np.ndarray``): the :math:`x` coordinates of the points
+        y (``np.ndarray``): the :math:`y` coordinates of the points
         **kwargs: possible additional arguments (none are used)
 
-    Returns: int, the index of the knee
+    Returns:
+        ``int``: the index of the knee
     """
     assert len(kwargs) == 0
     assert x.shape == y.shape
