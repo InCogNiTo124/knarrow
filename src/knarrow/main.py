@@ -18,7 +18,7 @@ def find_knee(x, y, method="menger_successive", **kwargs):
         method: `str`, denotes the method to be used (default: menger_successive)
         **kwargs: possible additional arguments for the knee-finding method
 
-    Returns: ``int``, the index of the knee
+    Returns (``int``): the index of the knee
     """
     assert method in [
         "angle",
