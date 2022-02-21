@@ -33,9 +33,10 @@ Optimizing an operating point of a given system does not consist solely of minim
 However, real world is full of noise and inputting raw data like that doesn't usually ends well. This is why `knarrow` also implements a custom cubic spline smoothing algorithm [@Reinsch1967; @Craven1978] to remove as much noise as possible.
 
 `knarrow` is designed to be used by anyone who wishes to optimize the behaviour of their system:
-  - Finding an optimal TPR/FPR threshold
-  - Finding the maximum requests-per-second point after which the system's latency skyrockets
-  - Finding the least amount of money beyond which the performance starts to seriously suffer
+
+* Finding an optimal TPR/FPR threshold
+* Finding the maximum requests-per-second point after which the system's latency skyrockets
+* Finding the least amount of money beyond which the performance starts to seriously suffer
 
 ... and many other unmentioned applications. `knarrow` is yet to be recognized by the public, however it is successfully used by the author himself in his day-to-day job, mainly for the uses they described above.
 
