@@ -11,6 +11,7 @@ tags:
   - optimal thresholding
 authors:
   - name: Marijan Smetko
+    orcid: 0000-0001-9457-6761
     affiliation: 1
 affiliations:
   - name: Independent Researcher
