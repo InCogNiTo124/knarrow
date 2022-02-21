@@ -61,6 +61,6 @@ Find a knee by fitting two lines using OLS.
 
 # Acknowledgements
 
-The author acknowledges using various other Internet sources as an inspiration for making `knarrow`. However, [mariolpantunes/knee](https://github.com/mariolpantunes/knee) stands out in particular as a good starting point for this project.
+The author acknowledges using various other Internet sources as an inspiration for making `knarrow`. However, [mariolpantunes/knee](https://github.com/mariolpantunes/knee) stands out in particular as a good starting point for this project. This project never applied nor received any financial support.
 
 # References
