@@ -23,7 +23,7 @@ bibliography: paper.bib
 
 Optimizing an operating point of a given system does not consist solely of minimization and maximization.[@kneedle] Quite often, a point of diminishing returns is reached, where further changes of a system's hyperparameter do not yield enough performance increase - the system is said to have reached a point of diminishing returns. After such points, the extra resource expenses are not worth the gains. Since we often don't wish to optimize the performance unconditionally, it is important to use methods which evaluate the performance increase with respect to the increase in resource expenditure. The output of such methods is a point in which further changes do not have as much of an effect - the so called _knee points_ or _elbow points_.
 
-[!Figure 1: A typical trade-off curves. A balancing point, a.k.a. a knee, might be found at 30% for the blue curve and below 20% for the red curve. Source: http://ncss.com](https://www.ncss.com/wp-content/uploads/2013/01/ROC-Curve-21.png)
+![Figure 1: A typical trade-off curves. A balancing point, a.k.a. a knee, might be found at 30% for the blue curve and below 20% for the red curve. Source: http://ncss.com](https://www.ncss.com/wp-content/uploads/2013/01/ROC-Curve-21.png)
 
 # Statement of need
 
@@ -32,11 +32,11 @@ Optimizing an operating point of a given system does not consist solely of minim
 However, real world is full of noise and inputting raw data like that doesn't usually ends well. This is why `knarrow` also implements a custom cubic spline smoothing algorithm [@Reinsch1967; @Craven1978] to remove as much noise as possible.
 
 `knarrow` is designed to be used by anyone who wishes to optimize the behaviour of their system:
-- Finding an optimal TPR/FPR threshold
-- Finding the maximum requests-per-second point after which the system's latency skyrockets
-- Finding the least amount of money beyond which the performance starts to seriously suffer
-- 
-and many other unmentioned applications. `knarrow` is yet to be recognized by the public, however it is successfully used by the author himself in his day-to-day job, mainly for the uses they described above.
+  - Finding an optimal TPR/FPR threshold
+  - Finding the maximum requests-per-second point after which the system's latency skyrockets
+  - Finding the least amount of money beyond which the performance starts to seriously suffer
+
+... and many other unmentioned applications. `knarrow` is yet to be recognized by the public, however it is successfully used by the author himself in his day-to-day job, mainly for the uses they described above.
 
 # Knee-finding methods
 
@@ -60,6 +60,6 @@ Find a knee by fitting two lines using OLS.
 
 # Acknowledgements
 
-The author acknowledges using various other Internet sources as an inspiration for making `knarrow`. However, one [mariolpantunes/knee](https://github.com/mariolpantunes/knee) stands out in particular as a good starting point for this project.
+The author acknowledges using various other Internet sources as an inspiration for making `knarrow`. However, [mariolpantunes/knee](https://github.com/mariolpantunes/knee) stands out in particular as a good starting point for this project.
 
 # References
