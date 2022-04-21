@@ -18,7 +18,7 @@ Detect knee points in various scenarios using a plethora of methods
 
 
 ## Usage
-Just plugin your values in a `list`, `tuple` or an `np.ndarray` and watch `knarrow` hit the knee:
+Just plug in your values in a `list`, `tuple` or an `np.ndarray` and watch `knarrow` hit the knee:
 
 ```pycon
 >>> from knarrow import find_knee
@@ -54,7 +54,18 @@ array([[0.  , 1.  ],
 4
 ```
 
-### Similar projects
+### CLI
+This library also comes with a handy CLI:
+```shell
+$ cat data.txt | knarrow
+stdin 11
+$ cat data.txt | knarrow -o value
+stdin 59874.14171519781845532648
+$ knarrow --sort -d ',' -o value shuf_delim.txt
+shuf_delim.txt 20
+```
+
+## Similar projects
 
 While I've come up with most of these methods by myself, I am not the only one. Here is a (non-comprehensive) list of projects I've found that implement a similar funcionality and may have been an inspiration for me:
 - [mariolpantunes/knee](https://github.com/mariolpantunes/knee)

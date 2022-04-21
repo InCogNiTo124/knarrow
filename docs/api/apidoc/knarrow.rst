@@ -1,6 +1,14 @@
 knarrow package
 ===============
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   knarrow.cli
+
 Submodules
 ----------
 

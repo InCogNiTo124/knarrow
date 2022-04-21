@@ -77,7 +77,9 @@ def prepare(f):
 
         # more or less all the algorithms depend on the inputs to be sorted, at least in the x dimension
         # therefore the x and y are sorted together
-        if not np.all(np.diff(x) > 0):
+        # the user should explicitly disallow sorting
+        perform_sort = kwargs.pop("sort", True)
+        if perform_sort and not np.all(np.diff(x) > 0):
             sorted_indices = np.argsort(x)  # sort in the ascending way
             x = x[sorted_indices]
             y = y[sorted_indices]
