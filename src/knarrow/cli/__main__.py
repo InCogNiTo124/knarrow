@@ -52,12 +52,12 @@ def get_parser():
     return parser
 
 
-def cli(method="all", files=None, sort=False, delimiter=None, output=None):
+def cli(method="all", files=None, sort=False, delimiter=None, output=None, smoothing=None):
     for filename in files:
         path = Path("/dev/stdin" if filename == "-" else filename)
         with path.open("r") as file:
+            rows = list(map(str.strip, file))
             split = partial(str.split, sep=delimiter)
-            rows = list(file)
             values = map(split, rows)
             numbers = list(tuple(float(value) for value in row) for row in values)
             indices = list(range(len(numbers)))
@@ -67,11 +67,11 @@ def cli(method="all", files=None, sort=False, delimiter=None, output=None):
                 numbers.sort(key=key_function)
 
             if method == "all":
-                counter = Counter([find_knee(numbers, method=m, sort=False) for m in METHODS])
+                counter = Counter([find_knee(numbers, method=m, sort=False, smoothing=smoothing) for m in METHODS])
                 most_common = counter.most_common(1).pop(0)
                 knee = most_common[0]
             else:
-                knee = find_knee(numbers, method=method, sort=False)
+                knee = find_knee(numbers, method=method, sort=False, smoothing=smoothing)
 
             result = indices[knee] if output == "index" else rows[indices[knee]]
             print(path.name, result)
