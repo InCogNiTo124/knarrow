@@ -56,4 +56,5 @@ setuptools.setup(
         "Topic :: Utilities",
         "Typing :: Typed",
     ],
+    entry_points={"console_scripts": ["knarrow=knarrow.cli.__main__:main"]},
 )
