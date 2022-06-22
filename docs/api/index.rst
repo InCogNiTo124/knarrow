@@ -15,6 +15,7 @@ Welcome to knarrow's documentation!
    apidoc/knee_types.rst
    apidoc/c_method.rst
    apidoc/angle_method.rst
+   apidoc/distance_method.rst
    apidoc/modules.rst
 
 
