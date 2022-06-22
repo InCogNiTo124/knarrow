@@ -13,6 +13,7 @@ Welcome to knarrow's documentation!
    :caption: Contents:
 
    apidoc/c_method.rst
+   apidoc/knee_types.rst
    apidoc/modules.rst
 
 
