@@ -12,8 +12,9 @@ Welcome to knarrow's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   apidoc/c_method.rst
    apidoc/knee_types.rst
+   apidoc/c_method.rst
+   apidoc/angle_method.rst
    apidoc/modules.rst
 
 

@@ -1,3 +1,5 @@
+.. _knee_types_label:
+
 Knee types
 ==========
 
