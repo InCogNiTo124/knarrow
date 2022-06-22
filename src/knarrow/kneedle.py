@@ -33,7 +33,6 @@ def kneedle(x, y, **kwargs):
     # where $x_sn$ is a vector of numbers scaled so that $min(x_sn) = 0$ and $max(x_sn) = 1$
     # If you **really** think about that, that sum will _always_ equal to 1
     t = y_lmx - s / (n - 1)
-    # print(t)
 
     # Step 6
     # Fancy numpy tricks:
@@ -50,6 +49,4 @@ def kneedle(x, y, **kwargs):
         under_threshold_ix < local_maxima_indices_augmented[1:]
     )
     final_maxima = local_maxima_indices[maxima_mask]
-    print("lmi", local_maxima_indices, ", fm", final_maxima)
-    print(type(final_maxima), final_maxima.dtype)
     return final_maxima[0].item() + 1
