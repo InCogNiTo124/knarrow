@@ -16,6 +16,7 @@ Welcome to knarrow's documentation!
    apidoc/c_method.rst
    apidoc/angle_method.rst
    apidoc/distance_method.rst
+   apidoc/adjacent_distance_method.rst
    apidoc/kneedle.rst
    apidoc/modules.rst
 
