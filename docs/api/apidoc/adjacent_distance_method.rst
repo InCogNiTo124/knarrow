@@ -1,5 +1,5 @@
-Distance method
-===============
+Adjacent distance method
+========================
 .. role:: strike
     :class: strike
 
@@ -10,9 +10,9 @@ For every point except for the two edge points, a line is passed through the two
 This method is quite sensitive to the input noise, so consider smoothing the input with cubic spline smoothing.
 
 Implementation [1]_
-****
+*******************
 
-Let's assume we have three points :math:`P_0(x_0, y_0)`, :math:`P_1(x_1, y_1)` and :math:`P_2(x_2, y_2)`. Let's also assume we want to calculate the distance from the point :math:`P_0` to the line going through :math:`P_1` and :math:`P_2`.
+Let's assume we have a triangle with three points: :math:`P_0(x_0, y_0)`, :math:`P_1(x_1, y_1)` and :math:`P_2(x_2, y_2)`. Let's also assume we want to calculate the distance from the point :math:`P_0` to the line going through :math:`P_1` and :math:`P_2`.
 
 The distance from a point to the line, given a line and the point, as per [2]_ is:
 
@@ -23,7 +23,7 @@ If you really look at the equation, the denominator looks like the length of *so
 Let's translate this entire triangle so that :math:`P_1` becomes the origin :math:`O(0, 0)`. This means we now have :math:`P'_1(0, 0)`, :math:`P'_0(x'_0=x_0-x_1, y'_0=y_0-y_1)` and :math:`P'_2(x'_2=x_2-x_1, y'_2=y_2-y_1)`. Rewriting the distance yields:
 
 
-.. math:: \mathrm{distance} \left(O,P'_{2},\left(x'_{0},y'_{0}\right)\right)={\frac {|\left(x'_2\right)\left(-y'_0\right)-\left(-x'_0\right)\left(y'_2\right)|}{\sqrt {\left(x'_2\right)^{2}+\left(y'_2\right)^{2}}}} = \frac{\left|det\left(\left[\begin{array}{cc}x'_0 & y'_0\\ x'_2 &y'_2\end{array}\right]\right)\right|}{|P'_2|}
+.. math:: \mathrm{distance} \left(O,P'_{2},\left(x'_{0},y'_{0}\right)\right)={\frac {|\left(x'_2\right)\left(-y'_0\right)-\left(-x'_0\right)\left(y'_2\right)|}{\sqrt {\left(x'_2\right)^{2}+\left(y'_2\right)^{2}}}} = \frac{\left|\mathrm{det}\left(\left[\begin{array}{cc}x'_0 & y'_0\\ x'_2 &y'_2\end{array}\right]\right)\right|}{|\vec{P'_2|}}
 
 The implementation makes use of the derived final form.
 
