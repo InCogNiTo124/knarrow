@@ -18,6 +18,7 @@ Welcome to knarrow's documentation!
    apidoc/distance_method.rst
    apidoc/adjacent_distance_method.rst
    apidoc/kneedle.rst
+   apidoc/menger.rst
    apidoc/modules.rst
 
 
