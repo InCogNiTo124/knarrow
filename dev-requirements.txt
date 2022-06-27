@@ -26,6 +26,7 @@ sphinx-autobuild
 furo
 insegel
 m2r2
+sphinxcontrib-katex
 
 ## User Guide.
 mkdocs-material

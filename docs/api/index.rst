@@ -12,7 +12,14 @@ Welcome to knarrow's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   apidoc/knee_types.rst
    apidoc/c_method.rst
+   apidoc/angle_method.rst
+   apidoc/distance_method.rst
+   apidoc/adjacent_distance_method.rst
+   apidoc/kneedle.rst
+   apidoc/menger.rst
+   apidoc/ols.rst
    apidoc/modules.rst
 
 
