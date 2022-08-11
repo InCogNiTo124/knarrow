@@ -12,7 +12,7 @@
 
 Shoot a `knarrow` to the knee ;)
 
-(The lib is better than this pun, I swear.)
+_(The lib is better than this pun, I swear.)_
 
 Detect knee points in various scenarios using a plethora of methods
 
