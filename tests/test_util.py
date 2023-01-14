@@ -1,3 +1,8 @@
+import numpy as np
+import numpy.linalg as la
+import numpy.typing as npt
+import pytest
+
 from knarrow.util import (
     KneeType,
     detect_knee_type,
@@ -7,10 +12,6 @@ from knarrow.util import (
     np_windowed,
     projection_distance,
 )
-import numpy as np
-import numpy.linalg as la
-import numpy.typing as npt
-import pytest
 
 
 @pytest.mark.parametrize(

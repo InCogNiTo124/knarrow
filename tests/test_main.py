@@ -1,6 +1,7 @@
-from knarrow.main import find_knee
 import numpy as np
 import pytest
+
+from knarrow.main import find_knee
 
 ALL_METHODS = [
     "angle",

@@ -1,6 +1,7 @@
-from knarrow.menger import double_triangle_area, get_squared_vector_lengths
 import numpy as np
 import pytest
+
+from knarrow.menger import double_triangle_area, get_squared_vector_lengths
 
 
 @pytest.mark.parametrize(
