@@ -95,6 +95,7 @@ branch = true
 parallel = true
 omit = [
   "src/knarrow/__about__.py",
+  "tests/conftest.py"
 ]
 
 [tool.coverage.report]
