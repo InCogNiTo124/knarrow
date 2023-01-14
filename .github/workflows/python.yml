@@ -29,6 +29,7 @@ jobs:
           3.10
           3.11
     - run: pip install hatch
+    - run: hatch run lint
     - run: hatch run test:cov
 
   build-and-publish:
