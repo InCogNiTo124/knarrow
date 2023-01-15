@@ -1,8 +1,5 @@
 name: Test and release job
 
-# I used to use this (not as good as it spawns extra jobs which cost precious minutes
-#on: [push, pull_request]
-
 on:
   push:
     branches:
@@ -31,6 +28,7 @@ jobs:
     - run: pip install hatch
     - run: hatch run lint
     - run: hatch run test:cov
+    - run: hatch build
     - run: hatch publish
       # if: startsWith(github.ref, 'refs/tags')
       env:

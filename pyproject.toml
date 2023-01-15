@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "knarrow"
-description = 'Shoot a knarrow / an arrow to the knee'
+description = 'Shoot a knarrow to the knee'
 readme = "README.md"
 requires-python = ">=3.7"
 license = "Apache-2.0"
@@ -33,7 +33,6 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "click==8.1.3",
   "numpy",
 ]
 dynamic = ["version"]
@@ -44,7 +43,7 @@ Issues = "https://github.com/InCogNiTo124/knarrow/issues"
 Source = "https://github.com/InCogNiTo124/knarrow"
 
 [project.scripts]
-knarrow = "knarrow.cli:knarrow"
+knarrow = "knarrow.cli.__main__:main"
 
 [tool.hatch.version]
 path = "src/knarrow/__about__.py"
@@ -68,6 +67,12 @@ lint = [
 "black --check .",
 "isort --check .",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/knarrow"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/knarrow/*"]
 
 [[tool.hatch.envs.test.matrix]]
 python = ["37", "38", "39", "310", "311"]
