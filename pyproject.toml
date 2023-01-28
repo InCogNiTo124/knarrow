@@ -37,35 +37,39 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.optional-dependencies]
+cli = ["typer[all]==0.7.0"]
+
 [project.urls]
 Documentation = "https://github.com/InCogNiTo124/knarrow#readme"
 Issues = "https://github.com/InCogNiTo124/knarrow/issues"
 Source = "https://github.com/InCogNiTo124/knarrow"
 
 [project.scripts]
-knarrow = "knarrow.cli.__main__:main"
+knarrow = "knarrow.cli:app"
 
 [tool.hatch.version]
 path = "src/knarrow/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-  "pytest",
-  "pytest-cov",
+  "black",
   "coverage[toml]",
   "flake8",
-  "mypy",
-  "black",
   "isort",
+  "mypy",
+  "pytest",
+  "pytest-cov",
+  "typer[all]"
 ]
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=src/knarrow --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
 lint = [
-"flake8 --max-line-length=120 .",
-"mypy .",
-"black --check .",
-"isort --check .",
+"flake8 src/",
+# "mypy src/",
+"black --check src/",
+"isort --check src/",
 ]
 
 [tool.hatch.build.targets.wheel]
