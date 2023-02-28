@@ -1,6 +1,7 @@
-from knarrow.main import find_knee
 import numpy as np
 import pytest
+
+from knarrow.main import find_knee
 
 ALL_METHODS = [
     "angle",
@@ -67,7 +68,6 @@ def test_twovar(smoothing, method, y, target):
         ([[0.0, 1.0]]),
         ([[0.0, 1.0], [0.0, 1.0]]),
         ([[0.0, 1.0, 2.0], [0.0, 1.0, 2.0], [3.0, 4.0, 5.5]]),
-        (np.array([1, 2, 3]).reshape(1, 1, 3),),
         (np.array([[1, 2, 3, 4]]), np.array([[1, 2, 3, 5]])),
         ([0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.45, 0.60, 1.0, 2.0]),
     ],

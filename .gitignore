@@ -427,3 +427,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/python,intellij+all,pycharm+all,vim,pythonvanilla,virtualenv,venv,macos,windows,linux
 /docs/api/_build/
 /docs/user_guide/site/
+__about__.py
