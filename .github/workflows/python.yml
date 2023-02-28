@@ -30,12 +30,6 @@ jobs:
     - run: hatch run test:cov
     - run: hatch build
     # TODO add cli tests (somehow)
-    - name: Publish to test.pypi.org
-      run: hatch publish
-      env:
-        HATCH_INDEX_REPO: https://test.pypi.org/legacy/
-        HATCH_INDEX_USER: __token__
-        HATCH_INDEX_AUTH: ${{ secrets.TEST_PYPI_TOKEN }}
     - name: Publish to pypi.org
       run: hatch publish
       if: startsWith(github.ref, 'refs/tags')
