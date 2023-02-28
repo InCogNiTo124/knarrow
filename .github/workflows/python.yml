@@ -25,7 +25,7 @@ jobs:
           3.9
           3.10
           3.11
-    - run: pip install hatch
+    - run: pip install hatch hatch-vcs
     - run: hatch run lint
     - run: hatch run test:cov
     - run: hatch build
