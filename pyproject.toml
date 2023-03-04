@@ -83,7 +83,7 @@ packages = ["src/knarrow"]
 include = ["src/knarrow/*"]
 
 [[tool.hatch.envs.test.matrix]]
-python = ["37", "38", "39", "310", "311"]
+python = ["3.7", "3.8", "3.9", "3.10", "3.11"]  # matches entries in workflow
 
 ### TODO perhaps optimize the tool configurations
 [tool.mypy]

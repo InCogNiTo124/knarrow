@@ -1,0 +1,24 @@
+name: Test and release job
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-publish:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    - run: pip install hatch hatch-vcs
+    - run: hatch build
+    - name: Publish to pypi.org
+      run: hatch publish
+      env:
+        HATCH_INDEX_USER: __token__
+        HATCH_INDEX_AUTH: ${{ secrets.PYPI_TOKEN }}
