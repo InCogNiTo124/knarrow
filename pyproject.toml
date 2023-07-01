@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "knarrow"
 description = 'Shoot a knarrow to the knee'
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = "Apache-2.0"
 keywords = [ "optimization", "knee", "elbow", "kneedle" ]
 authors = [
@@ -21,7 +21,6 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -83,7 +82,7 @@ packages = ["src/knarrow"]
 include = ["src/knarrow/*"]
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.7", "3.8", "3.9", "3.10", "3.11"]  # matches entries in workflow
+python = ["3.8", "3.9", "3.10", "3.11"]  # matches entries in workflow
 
 ### TODO perhaps optimize the tool configurations
 [tool.mypy]
@@ -98,7 +97,7 @@ exclude = "venv"
 [tool.black]
 # Use the more relaxed max line length permitted in PEP8.
 line-length = 120
-target-version = ["py36", "py37", "py38", "py39"]
+target-version = ["py38", "py39", "py3.10", "py3.11"]
 # black will automatically exclude all files listed in .gitignore
 # If you need to exclude additional folders, consider using extend-exclude to avoid disabling the
 # default .gitignore behaviour.
