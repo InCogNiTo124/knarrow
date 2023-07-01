@@ -55,19 +55,22 @@ array([[0.  , 1.  ],
 ```
 
 ### CLI
-This library also comes with a handy CLI:
+This library can also come with a handy CLI if you install it with the `cli` extra:
 ```shell
-$ cat data.txt | knarrow
-stdin 11
-$ cat data.txt | knarrow -o value
-stdin 59874.14171519781845532648
+$ pip install "knarrow[cli]"
+$ cat data.txt | knarrow -
+<stdin> 11
+$ cat data.txt | knarrow -o value -
+<stdin> 59874.14171519781845532648
 $ knarrow --sort -d ',' -o value shuf_delim.txt
 shuf_delim.txt 20
 ```
+_(the `-` for stdin is, unfortunately, mandatory)_
+Try writing `knarrow --help` for more info.
 
 ## Similar projects
 
-While I've come up with most of these methods by myself, I am not the only one. Here is a (non-comprehensive) list of projects I've found that implement a similar funcionality and may have been an inspiration for me:
+While I've come up with most of these methods by myself, I am not the only one. Here is a (non-comprehensive) list of projects I've found that implement a similar functionality and may have been an inspiration for me:
 - [mariolpantunes/knee](https://github.com/mariolpantunes/knee)
 
-Note: this project was bootstrapped by [python-blueprint](https://github.com/johnthagen/python-blueprint)
+Note: this project was bootstrapped by [python-blueprint](https://github.com/johnthagen/python-blueprint). Since then, it has been heavily modified, though.
