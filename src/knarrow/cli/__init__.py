@@ -6,6 +6,7 @@ from collections import Counter
 import enum
 from functools import partial
 from pathlib import Path
+import sys
 from typing import List, Optional
 
 import typer
@@ -49,12 +50,10 @@ def version_callback(value: bool) -> None:
 def main(
     method: Method = typer.Option("all", help="The method to use to calculate the knee's position"),
     files: List[Path] = typer.Argument(
-        None,
         allow_dash=True,
         exists=True,
         dir_okay=False,
         readable=True,
-        callback=stdin_callback,
         help="List of input files (default: stdin)",
         show_default=False,
     ),
@@ -74,7 +73,8 @@ def main(
     ),  # version boilerplate
 ):
     for path in files:
-        with path.open("r") as file:
+        file = sys.stdin if str(path) == "-" else path.open("r")
+        with file:
             rows = list(map(str.strip, file))
             split = partial(str.split, sep=delimiter)
             values = map(split, rows)
@@ -99,5 +99,5 @@ def main(
                 knee = find_knee(numbers, method=method.value, sort=sort, smoothing=smoothing)
 
             result = indices[knee] if output == Output.INDEX else rows[indices[knee]]
-            print(path.name, result)
+            print(file.name if str(path) == "-" else path.name, result)
     return

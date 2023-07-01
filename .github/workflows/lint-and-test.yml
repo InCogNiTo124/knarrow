@@ -28,5 +28,4 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - run: pip install hatch hatch-vcs
     - run: hatch run lint
-    # TODO add CLI tests (somehow)
     - run: hatch run +py=${{ matrix.python-version }} test:cov  # matches entries in pyproject.toml
