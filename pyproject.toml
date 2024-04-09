@@ -37,7 +37,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.optional-dependencies]
-cli = ["typer[all]==0.9.0"]
+cli = ["typer[all]==0.12.3"]
 
 [project.urls]
 Documentation = "https://github.com/InCogNiTo124/knarrow#readme"
