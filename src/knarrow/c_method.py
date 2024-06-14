@@ -17,7 +17,8 @@ def f(x, c):
         ``np.ndarray``: the values of the function evaluated at :math:`x` with respect to. `c`
 
     """
-    return x * (np.exp(c) + 1) / (x * np.exp(c) + 1)
+    b = x * np.exp(c) + 1
+    return x * (np.exp(c) + 1) / b, b
 
 
 def df_dc(x, c):
@@ -106,7 +107,10 @@ def newton_raphson(x, y):
     new_c = 3
     while abs(new_c - c) > TOLERANCE:
         c = new_c
-        new_c = c - de_dc(y, x, c) / d2e_dc2(y, x, c)
+        y, b = f(x, c)  # b is cached as the result is used for derivative calculations
+        f_prime = (y - x) / b
+        f_prime_prime = f_prime * (2 - b) / b
+        new_c = c - np.mean(f_prime) / np.mean(f_prime_prime)
     return new_c
 
 
