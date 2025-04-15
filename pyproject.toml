@@ -77,3 +77,15 @@ show_missing = true
 fail_under = 95
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 sort = "-miss"
+
+[dependency-groups]
+docs = [
+    "furo>=2024.8.6",
+    "insegel>=1.3.1",
+    "m2r2>=0.3.3.post2",
+    "mkdocs-htmlproofer-plugin>=1.3.0",
+    "mkdocs-material>=9.6.12",
+    "sphinx>=7.1.2",
+    "sphinx-autobuild>=2021.3.14",
+    "sphinxcontrib-katex>=0.9.10",
+]
