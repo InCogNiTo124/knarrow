@@ -30,8 +30,8 @@ author = "Marijan Smetko"
 # ones.
 extensions = [
     "sphinx.ext.napoleon",
-    "m2r2",
     "sphinxcontrib.katex",
+    "sphinx_mdinclude",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
