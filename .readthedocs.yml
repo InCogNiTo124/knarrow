@@ -16,7 +16,7 @@ build:
       #
       # one of the ugliest hacks I've ever written
       # https://github.com/CrossNox/m2r2/pull/71
-      - "sed -i -e '13s/nodes, //' -e 611d $READTHEDOCS_VIRTUALENV_PATH/lib/python3.13/site-packages/m2r2.py"
+      - "sed -i -e '13s/nodes, //g' -e 611d $READTHEDOCS_VIRTUALENV_PATH/lib/python3.13/site-packages/m2r2.py"
     install:
       - "true"
 
