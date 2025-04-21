@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "knarrow"
 description = 'Shoot a knarrow to the knee'
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = "Apache-2.0"
 keywords = ["optimization", "knee", "elbow", "kneedle"]
 authors = [{ name = "Marijan Smetko", email = "msmetko@msmetko.xyz" }]
@@ -80,13 +80,13 @@ sort = "-miss"
 
 [dependency-groups]
 docs = [
-    "furo>=2024.8.6",
-    "insegel>=1.3.1",
-    "m2r2>=0.3.3.post2",
-    "mkdocs-htmlproofer-plugin>=1.3.0",
-    "mkdocs-material>=9.6.12",
-    "setuptools>=75.3.2",
-    "sphinx>=7.1.2",
-    "sphinx-autobuild>=2021.3.14",
-    "sphinxcontrib-katex>=0.9.10",
+  "furo>=2024.8.6",
+  "insegel>=1.3.1",
+  "m2r2>=0.3.3.post2",
+  "mkdocs-htmlproofer-plugin>=1.3.0",
+  "mkdocs-material>=9.6.12",
+  "setuptools",
+  "sphinx",
+  "sphinx-autobuild>=2024.10.3",
+  "sphinxcontrib-katex>=0.9.10",
 ]

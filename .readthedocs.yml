@@ -12,6 +12,11 @@ build:
       - asdf install uv latest
       - asdf global uv latest
       - UV_PROJECT_ENVIRONMENT=$READTHEDOCS_VIRTUALENV_PATH uv sync --all-extras --group docs
+      # TODO: I'm not sure why I even use m2r2
+      #
+      # one of the ugliest hacks I've ever written
+      # https://github.com/CrossNox/m2r2/pull/71
+      - "sed '13s/nodes, //;611d' $READTHEDOCS_VIRTUALENV_PATH/.venv/lib/python3.13/site-packages/m2r2.py"
     install:
       - "true"
 

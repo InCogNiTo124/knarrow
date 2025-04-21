@@ -428,3 +428,4 @@ $RECYCLE.BIN/
 /docs/api/_build/
 /docs/user_guide/site/
 __about__.py
+_build
