@@ -7,7 +7,7 @@ on:
     branches:
       - "master"
     paths:
-      - "./src/knarrow/__about__.py"
+      - src/knarrow/__about__.py
 
 jobs:
   build-and-publish:
