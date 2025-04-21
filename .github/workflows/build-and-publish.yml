@@ -1,4 +1,4 @@
-name: Test and release job
+name: Build and publish
 
 on:
   push:
