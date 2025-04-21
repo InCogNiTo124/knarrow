@@ -15,16 +15,16 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.8"
-          - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
+          - "3.13"
     steps:
-    - uses: actions/checkout@master
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-    - run: pip install hatch hatch-vcs
-    - run: hatch run lint
-    - run: hatch run +py=${{ matrix.python-version }} test:cov  # matches entries in pyproject.toml
+      - uses: actions/checkout@master
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install hatch hatch-vcs
+      - run: hatch run lint
+      - run: hatch run +py=${{ matrix.python-version }} test:cov # matches entries in pyproject.toml

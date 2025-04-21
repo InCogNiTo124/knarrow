@@ -9,9 +9,13 @@ from pathlib import Path
 import sys
 from typing import List, Optional
 
-import typer
+try:
+    import typer
+    from knarrow import find_knee
+except ImportError:
+    print("Please install 'knarrow[cli]' to use this command.")
+    sys.exit(1)
 
-from knarrow import find_knee
 
 from ..__about__ import __version__
 
@@ -48,7 +52,9 @@ def version_callback(value: bool) -> None:
 
 @app.command()
 def main(
-    method: Method = typer.Option("all", help="The method to use to calculate the knee's position"),
+    method: Method = typer.Option(
+        "all", help="The method to use to calculate the knee's position"
+    ),
     files: List[Path] = typer.Argument(
         allow_dash=True,
         exists=True,
@@ -59,12 +65,16 @@ def main(
     ),
     sort: bool = typer.Option(False, help="Whether or not to sort the input"),
     delimiter: str = typer.Option(
-        ",", help="If the input is 2-dimensional, split the dimensions by this option's value"
+        ",",
+        help="If the input is 2-dimensional, split the dimensions by this option's value",
     ),
     output: Output = typer.Option(
-        "value", help="Type of output. Value means value itself, index means it's ordinal number"
+        "value",
+        help="Type of output. Value means value itself, index means it's ordinal number",
     ),
-    smoothing: float = typer.Option(0.0, min=0.0, help="Cubic spline smoothing parameter"),
+    smoothing: float = typer.Option(
+        0.0, min=0.0, help="Cubic spline smoothing parameter"
+    ),
     version: Optional[bool] = typer.Option(
         None,
         "--version",
@@ -82,13 +92,17 @@ def main(
             indices = list(range(len(numbers)))
             if sort:
                 indices.sort(key=lambda i: numbers[i])
-                key_function = (lambda x: x) if len(numbers[0]) == 1 else (lambda x: x[0])
+                key_function = (
+                    (lambda x: x) if len(numbers[0]) == 1 else (lambda x: x[0])
+                )
                 numbers.sort(key=key_function)
 
             if method == Method.ALL:
                 counter = Counter(
                     [
-                        find_knee(numbers, method=m.value, sort=sort, smoothing=smoothing)
+                        find_knee(
+                            numbers, method=m.value, sort=sort, smoothing=smoothing
+                        )
                         for m in Method
                         if m != Method.ALL
                     ]
@@ -96,7 +110,9 @@ def main(
                 most_common = counter.most_common(1).pop(0)
                 knee = most_common[0]
             else:
-                knee = find_knee(numbers, method=method.value, sort=sort, smoothing=smoothing)
+                knee = find_knee(
+                    numbers, method=method.value, sort=sort, smoothing=smoothing
+                )
 
             result = indices[knee] if output == Output.INDEX else rows[indices[knee]]
             print(file.name if str(path) == "-" else path.name, result)
