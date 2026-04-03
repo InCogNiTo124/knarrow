@@ -1,6 +1,18 @@
-from typing import Any
+from typing import Any, List, Optional
 
-import numpy as np
-from numpy import typing as npt
+import numpy.typing as npt
 
-def find_knee(x: npt.NDArray[np.float_], y: npt.NDArray[np.float_], method: str, kwargs: Any) -> int: ...
+_METHODS: List[str]
+
+def find_knee(
+    x: npt.ArrayLike,
+    y: Optional[npt.ArrayLike] = ...,
+    method: str = ...,
+    **kwargs: Any,
+) -> int: ...
+
+def all(
+    x: npt.ArrayLike,
+    y: Optional[npt.ArrayLike] = ...,
+    **kwargs: Any,
+) -> int: ...

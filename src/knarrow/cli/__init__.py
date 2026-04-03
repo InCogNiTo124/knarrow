@@ -34,7 +34,7 @@ app = typer.Typer()
 
 
 def stdin_callback(value: Optional[Path]) -> List[Path]:
-    return value if value else [Path("/dev/stdin")]
+    return [value] if value else [Path("/dev/stdin")]
 
 
 def version_callback(value: bool) -> None:
