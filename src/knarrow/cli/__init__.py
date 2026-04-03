@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from collections import Counter
 import enum
 from functools import partial
 from pathlib import Path
@@ -12,6 +11,7 @@ from typing import List, Optional
 try:
     import typer
     from knarrow import find_knee
+    from knarrow.main import _METHODS
 except ImportError:
     print("Please install 'knarrow[cli]' to use this command.")
     sys.exit(1)
@@ -20,16 +20,9 @@ except ImportError:
 from ..__about__ import __version__
 
 
-class Method(str, enum.Enum):
-    ALL = "all"
-    ANGLE = "angle"
-    C_METHOD = "c_method"
-    DISTANCE = "distance"
-    DISTANCE_ADJACENT = "distance_adjacent"
-    KNEEDLE = "kneedle"
-    MENGER_ANCHORED = "menger_anchored"
-    MENGER_SUCCESSIVE = "menger_successive"
-    OLS_SWIPING = "ols_swiping"
+# Build enum members: ALL + one per method (uppercased)
+_method_members = {"ALL": "all", **{m.upper(): m for m in _METHODS}}
+Method = enum.Enum("Method", _method_members, type=str)
 
 
 class Output(str, enum.Enum):
@@ -98,17 +91,7 @@ def main(
                 numbers.sort(key=key_function)
 
             if method == Method.ALL:
-                counter = Counter(
-                    [
-                        find_knee(
-                            numbers, method=m.value, sort=sort, smoothing=smoothing
-                        )
-                        for m in Method
-                        if m != Method.ALL
-                    ]
-                )
-                most_common = counter.most_common(1).pop(0)
-                knee = most_common[0]
+                knee = find_knee(numbers, method="all", sort=sort, smoothing=smoothing)
             else:
                 knee = find_knee(
                     numbers, method=method.value, sort=sort, smoothing=smoothing

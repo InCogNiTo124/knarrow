@@ -1,3 +1,3 @@
-from .main import find_knee
+from .main import all, find_knee
 
-__all__ = ["find_knee"]
+__all__ = ["find_knee", "all"]
