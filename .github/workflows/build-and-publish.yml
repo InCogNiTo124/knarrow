@@ -11,18 +11,19 @@ on:
 
 jobs:
   build-and-publish:
-    name: Run tests
+    name: Build and publish to PyPI
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # required for OIDC trusted publishing
     steps:
       - uses: actions/checkout@master
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@master
         with:
-          python-version: 3.13
-      - run: pip install hatch
-      - run: hatch build
-      - name: Publish to pypi.org
-        run: hatch publish
-        env:
-          HATCH_INDEX_USER: __token__
-          HATCH_INDEX_AUTH: ${{ secrets.PYPI_TOKEN }}
+          python-version: "3.13"
+      - name: Install uv
+        uses: astral-sh/setup-uv@master
+      - name: Build
+        run: uv build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
