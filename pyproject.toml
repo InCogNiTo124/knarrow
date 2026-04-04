@@ -44,8 +44,9 @@ Source = "https://github.com/InCogNiTo124/knarrow"
 knarrow = "knarrow.cli:app"
 
 [tool.hatch.version]
+source = "code"
 path = "src/knarrow/__about__.py"
-pattern = "^__version__ = version = \"(?P<version>.*)\"$"
+expression = "__version__"
 
 
 [tool.hatch.envs.default]
