@@ -33,7 +33,7 @@ dependencies = ["numpy"]
 dynamic = ["version"]
 
 [project.optional-dependencies]
-cli = ["typer==0.24.1"]
+cli = ["typer==0.25.1"]
 
 [project.urls]
 Documentation = "https://github.com/InCogNiTo124/knarrow#readme"
