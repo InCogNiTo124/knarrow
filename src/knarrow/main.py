@@ -35,13 +35,12 @@ def find_knee(x, y, method="menger_successive", **kwargs):
     """
     assert method in _METHODS + ["all"]
     if method == "all":
-        return all(x, y, **kwargs)
+        return _all(x, y, **kwargs)
     function = globals()[method]
     return function(x, y, **kwargs)
 
 
-@prepare
-def all(x, y, **kwargs):
+def _all(x, y, **kwargs):
     """
     Find the knee by running all available methods and returning the most-voted result.
 
@@ -60,3 +59,6 @@ def all(x, y, **kwargs):
         for m in _METHODS
     )
     return votes.most_common(1)[0][0]
+
+
+all = prepare(_all)

@@ -74,3 +74,27 @@ def test_twovar(smoothing, method, y, target):
 )
 def test_fails(method, inputs):
     find_knee(*inputs, method=method)
+
+
+INC_CONCAVE_Y = [0, 0.5, 0.75, 0.875, 0.9375, 0.96875, 0.984375, 0.9921875, 0.996, 0.998, 1]
+INC_CONVEX_Y = [0, 0.004, 0.016, 0.054, 0.125, 0.25, 0.42, 0.6, 0.76, 0.88, 1]
+
+
+@pytest.mark.parametrize("method", ALL_METHODS + ["all"])
+@pytest.mark.parametrize(
+    "y",
+    [INC_CONCAVE_Y, list(reversed(INC_CONCAVE_Y)), INC_CONVEX_Y, list(reversed(INC_CONVEX_Y))],
+)
+def test_all_knee_types(method, y):
+    # exercises all four knee-type conversions in prepare for every method
+    index = find_knee(y, method=method)
+    assert 0 <= index < len(y)
+
+
+@pytest.mark.parametrize("method", ALL_METHODS + ["all"])
+@pytest.mark.parametrize("y", [INC_CONCAVE_Y, INC_CONVEX_Y])
+def test_mirror_symmetry(method, y):
+    # reversing the curve must mirror the knee index
+    index = find_knee(y, method=method)
+    reversed_index = find_knee(list(reversed(y)), method=method)
+    assert reversed_index == len(y) - 1 - index

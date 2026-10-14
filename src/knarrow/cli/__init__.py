@@ -3,13 +3,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import enum
+import sys
 from functools import partial
 from pathlib import Path
-import sys
-from typing import List, Optional
 
 try:
     import typer
+
     from knarrow import find_knee
     from knarrow.main import _METHODS
 except ImportError:
@@ -18,7 +18,6 @@ except ImportError:
 
 
 from ..__about__ import __version__
-
 
 # Build enum members: ALL + one per method (uppercased)
 _method_members = {"ALL": "all", **{m.upper(): m for m in _METHODS}}
@@ -33,10 +32,6 @@ class Output(str, enum.Enum):
 app = typer.Typer()
 
 
-def stdin_callback(value: Optional[Path]) -> List[Path]:
-    return [value] if value else [Path("/dev/stdin")]
-
-
 def version_callback(value: bool) -> None:
     if value:
         print(f"knarrow v{__version__}\nType `knarrow --help` for further info.")
@@ -48,7 +43,7 @@ def main(
     method: Method = typer.Option(
         "all", help="The method to use to calculate the knee's position"
     ),
-    files: List[Path] = typer.Argument(
+    files: list[Path] = typer.Argument(
         allow_dash=True,
         exists=True,
         dir_okay=False,
@@ -68,7 +63,7 @@ def main(
     smoothing: float = typer.Option(
         0.0, min=0.0, help="Cubic spline smoothing parameter"
     ),
-    version: Optional[bool] = typer.Option(
+    version: bool | None = typer.Option(
         None,
         "--version",
         callback=version_callback,
@@ -81,7 +76,7 @@ def main(
             rows = list(map(str.strip, file))
             split = partial(str.split, sep=delimiter)
             values = map(split, rows)
-            numbers = list(tuple(float(value) for value in row) for row in values)
+            numbers = [tuple(float(value) for value in row) for row in values]
             indices = list(range(len(numbers)))
             if sort:
                 indices.sort(key=lambda i: numbers[i])
@@ -99,4 +94,3 @@ def main(
 
             result = indices[knee] if output == Output.INDEX else rows[indices[knee]]
             print(file.name if str(path) == "-" else path.name, result)
-    return

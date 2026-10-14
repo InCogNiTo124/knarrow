@@ -55,4 +55,4 @@ def ols_swiping(x, y, **kwargs):
     # generator of all the splits, linear regressions and the sums of particular r2 coefficients
     results = ((i, r_squared(x[: i + 1], y[: i + 1]) + r_squared(x[i:], y[i:])) for i in range(1, n - 1))
     # the values are only calculated as the generator is consumed :))
-    return min(results, key=lambda t: t[1])[0]
+    return max(results, key=lambda t: t[1])[0]

@@ -1,11 +1,10 @@
 import enum
-from typing import Union
 
 import numpy as np
 import numpy.linalg as la
 import numpy.typing as npt
 
-Number = Union[int, float]
+Number = int | float
 
 EPS = 1e-5
 
