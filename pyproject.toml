@@ -33,7 +33,7 @@ dependencies = ["numpy"]
 dynamic = ["version"]
 
 [project.optional-dependencies]
-cli = ["typer==0.24.1"]
+cli = ["typer==0.27.3"]
 
 [project.urls]
 Documentation = "https://github.com/InCogNiTo124/knarrow#readme"
@@ -76,6 +76,10 @@ show_missing = true
 fail_under = 95
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 sort = "-miss"
+
+[tool.ruff.lint.flake8-bugbear]
+# Typer's documented idiom: Option/Argument descriptors as parameter defaults.
+extend-immutable-calls = ["typer.Argument", "typer.Option"]
 
 [dependency-groups]
 dev = [
